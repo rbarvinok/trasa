@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="650.0" prefWidth="1125.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.Controller">
+    <children>
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="Файл">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onClickNew" text="Новий" />
+                        <MenuItem mnemonicParsing="false" onAction="#openDataOGZ84" text="Відкрити" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClickSave" text="Зберегти" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClickCancelBtn" text="Вийти" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Інструменти">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onClickCalculate" text="Розрахувати" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClickChart" text="Графік" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClickOpenFileInDesktop" text="Перегляд файлу" />
+                        <MenuItem mnemonicParsing="false" onAction="#getSoursNMEA" text="Вилучення даних з NMEA-0183" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Конвертер координат">
+                    <items>
+                        <Menu mnemonicParsing="false" text="WGS-84">
+                            <items>
+                                <Menu mnemonicParsing="false" onAction="#openDataDMStoDD" text="Градуси, мінути, секунди">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="В градуси" />
+                                        <MenuItem mnemonicParsing="false" text="В СК-42" />
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" onAction="#openDataDDtoDMS" text="Градуси">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="В градуси, мінути, секунди" />
+                                        <MenuItem mnemonicParsing="false" text="В СК-42" />
+                                    </items>
+                                </Menu>
+                            </items>
+                        </Menu>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#openDataCK42toDD" text="CK-42 в WGS-84" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Геодезичні задачі">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#openDataCompare" text="Порівняння координат" />
+                        <MenuItem mnemonicParsing="false" onAction="#openDataOGZWGS84" text="Обернена геодезична задача" />
+                        <MenuItem mnemonicParsing="false" text="Пряма геодезична задача" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Налаштування">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onClickLocalZone" text="Часовий пояс" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Допомога">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onClickManual" text="Керівництво оператора ПЗ" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClick_menuAbout" text="Про програму" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <ToolBar prefHeight="35.0" prefWidth="665.0">
+            <items>
+                <Button fx:id="tNew" lineSpacing="1.0" mnemonicParsing="false" onAction="#onClickNew" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/new.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Новий бланк" />
+                    </tooltip>
+                </Button>
+                <Button fx:id="tSave" mnemonicParsing="false" onAction="#onClickSave" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <tooltip>
+                        <Tooltip text="Зберегти в файл" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/save.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            <Button fx:id="tSave1" layoutX="50.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickSave" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+               <tooltip>
+                  <Tooltip text="Зберегти в файл" />
+               </tooltip>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/open.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="0.0" />
+                <Button layoutX="424.0" layoutY="9.0" mnemonicParsing="false" onAction="#getSoursNMEA" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <tooltip>
+                        <Tooltip text="Вилучення даних з NMEA-0381" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/NMEA_4182j.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Separator layoutX="211.0" layoutY="10.0" orientation="VERTICAL" prefHeight="0.0" prefWidth="4.0">
+                    <tooltip>
+                        <Tooltip text="Зактити програму" />
+                    </tooltip>
+                </Separator>
+                <Button fx:id="tCalc" layoutX="90.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickCalculate" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <tooltip>
+                        <Tooltip text="Розрахувати" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/calculator.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="tChart" layoutX="140.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickChart" prefHeight="25.0" prefWidth="26.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <tooltip>
+                        <Tooltip text="Відобразити графік" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/Chart.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="4.0">
+                    <tooltip>
+                        <Tooltip text="Зактити програму" />
+                    </tooltip>
+                </Separator>
+                <Button id="b" layoutX="50.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickOpenFileInDesktop" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/XLS-icon.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Відкрити файл для перегляду" />
+                    </tooltip>
+                </Button>
+                <Separator layoutX="221.0" layoutY="10.0" orientation="VERTICAL" prefHeight="0.0" prefWidth="4.0">
+                    <tooltip>
+                        <Tooltip text="Зактити програму" />
+                    </tooltip>
+                </Separator>
+                <Button id="b" layoutX="50.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickLocalZone" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/options.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Веедення часового поясу" />
+                    </tooltip>
+                </Button>
+
+                <Button mnemonicParsing="false" onAction="#onClickManual" prefHeight="18.0" prefWidth="16.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <graphic>
+                        <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/question-mark.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Довідка" />
+                    </tooltip>
+                </Button>
+                <Button id="b" layoutX="231.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickCancelBtn" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/icons-exit.jpg" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Вихід з програми" />
+                    </tooltip>
+                </Button>
+            </items>
+        </ToolBar>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <children>
+                <Label fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="1002.0" layoutY="7.0" prefHeight="31.0" prefWidth="99.0" text="label" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="1002.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="10.0">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <AnchorPane layoutX="19.0" layoutY="178.0" prefHeight="379.0" prefWidth="1115.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="178.0">
+                    <children>
+                  <TableView fx:id="outputTable" accessibleText="Відкрийте файл даних" layoutX="13.0" prefHeight="379.0" prefWidth="1115.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane>
+            <children>
+                <TextField fx:id="statusBar" editable="false" prefHeight="25.0" prefWidth="934.0" promptText="Очікування вхідних даних" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                <TextField fx:id="labelLineCount" editable="false" layoutX="747.0" prefHeight="25.0" prefWidth="185.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>
