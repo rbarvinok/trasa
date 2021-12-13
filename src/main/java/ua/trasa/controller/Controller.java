@@ -48,7 +48,7 @@ public class Controller implements Initializable {
     public String status;
     public String missionID, radarLat,radarLon, radarAlt;
     public String launchLat, launchLon, launchAlt, launchX, launchY, launchZ;
-    public static double time, allTime, timeStart, timeStop;
+    public static double allTime, timeStart, timeStop;
 
     public static List<InputDataMaster> inputDataMaster = new ArrayList<>();
     public static List<Master> master = new ArrayList<>();
@@ -59,7 +59,7 @@ public class Controller implements Initializable {
     public TableView outputTable;
     public TextField statusBar;
     public TextField labelLineCount;
-    public Button tPosition, tNew, tSave, tOpenFile;
+    public Button tPosition, tNew, tSave, tOpenFile, tMaster, tSlave, tChart;
     public Button tKML, tGoogleEarth;
 
     @SneakyThrows
@@ -94,7 +94,7 @@ public class Controller implements Initializable {
         while ((line = bufferedReader.readLine()) != null) {
 
             if (lineNumber == 5) {
-                missionID = line.split(":")[1];
+                missionID = line.split(":")[1].trim();
             }
             if (lineNumber == 22) {
                 radarLat = line.split(":")[2].replace("Lon","");;
@@ -151,9 +151,12 @@ public class Controller implements Initializable {
         }
         fileReader.close();
 
+        tMaster.setDisable(false);
+        tSlave.setDisable(false);
+
         allTime = rint((timeStop-timeStart)*100000)/100000;
-        labelLineCount.setText("Строк" + (lineNumber-57));
-        statusBar.setText("Файл: " + openFile + "    ID: " + missionID + "     Час супроводження: " + allTime);
+        labelLineCount.setText("Строк: " + (lineNumber-57));
+        statusBar.setText("Файл: " + openFile + "      ID: " + missionID + "     Час супроводження: " + allTime);
 
         inputDates(inputDataMaster);
         TableColumn<InputDate, String> tTime = new TableColumn<>("Час");
@@ -195,11 +198,15 @@ public class Controller implements Initializable {
     }
 
     public void onClickSlave() {
-
+        tSave.setDisable(false);
+        tKML.setDisable(false);
+        tChart.setDisable(false);
     }
 
     public void onClickMaster() {
-
+        tSave.setDisable(false);
+        tKML.setDisable(false);
+        tChart.setDisable(false);
     }
 
     public void onClickChart() throws IOException {
@@ -351,6 +358,12 @@ public class Controller implements Initializable {
     }
 
     public void onClickNew(ActionEvent e) {
+        tMaster.setDisable(true);
+        tSlave.setDisable(true);
+        tSave.setDisable(true);
+        tKML.setDisable(true);
+        tChart.setDisable(true);
+
         outputTable.getColumns().clear();
         outputTable.getItems().clear();
         statusBar.setText("");

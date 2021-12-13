@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="650.0" prefWidth="1125.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.Controller">
+<VBox prefHeight="650.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.Controller">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
@@ -50,7 +50,7 @@
                         <Tooltip text="Новий бланк" />
                     </tooltip>
                 </Button>
-                <Button fx:id="tSave" mnemonicParsing="false" onAction="#onClickSave" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                <Button fx:id="tSave" disable="true" mnemonicParsing="false" onAction="#onClickSave" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
                     <tooltip>
                         <Tooltip text="Зберегти в файл" />
                     </tooltip>
@@ -75,7 +75,7 @@
                </graphic>
             </Button>
                 <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="0.0" />
-            <Button fx:id="tMaster" layoutX="140.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickMaster" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+            <Button fx:id="tMaster" disable="true" layoutX="140.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickMaster" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
                <tooltip>
                   <Tooltip text="Master" />
                </tooltip>
@@ -87,7 +87,7 @@
                   </ImageView>
                </graphic>
             </Button>
-                <Button fx:id="tSlave" layoutX="90.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickSlave" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                <Button fx:id="tSlave" disable="true" layoutX="90.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickSlave" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
                     <tooltip>
                         <Tooltip text="Slave" />
                     </tooltip>
@@ -99,7 +99,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="tChart" layoutX="140.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickChart" prefHeight="25.0" prefWidth="26.0" styleClass="button1" stylesheets="@../styles/day.css">
+                <Button fx:id="tChart" disable="true" layoutX="140.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickChart" prefHeight="25.0" prefWidth="26.0" styleClass="button1" stylesheets="@../styles/day.css">
                     <tooltip>
                         <Tooltip text="Відобразити графік" />
                     </tooltip>
@@ -111,7 +111,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-            <Button fx:id="tKML" layoutX="180.0" layoutY="8.0" mnemonicParsing="false" onAction="#onClickKML" prefHeight="25.0" prefWidth="26.0" styleClass="button1" stylesheets="@../styles/day.css">
+            <Button fx:id="tKML" disable="true" layoutX="180.0" layoutY="8.0" mnemonicParsing="false" onAction="#onClickKML" prefHeight="25.0" prefWidth="26.0" styleClass="button1" stylesheets="@../styles/day.css">
                <tooltip>
                   <Tooltip text="Створити файл KML" />
                </tooltip>
