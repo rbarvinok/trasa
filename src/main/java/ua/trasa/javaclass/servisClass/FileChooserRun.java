@@ -15,9 +15,8 @@ public class FileChooserRun {
         fileChooser.setTitle("Comparis. Відкриття файлу");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.getExtensionFilters().addAll(
-                new javafx.stage.FileChooser.ExtensionFilter("*.xlsx", "*.xlsx"),
-                new javafx.stage.FileChooser.ExtensionFilter("*.csv", "*.csv"),
                 new javafx.stage.FileChooser.ExtensionFilter(".txt", "*.txt"),
+                new javafx.stage.FileChooser.ExtensionFilter("*.csv", "*.csv"),
                 new javafx.stage.FileChooser.ExtensionFilter("*.*", "*.*"));
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         try {

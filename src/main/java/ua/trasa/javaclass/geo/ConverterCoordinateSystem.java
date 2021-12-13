@@ -1,12 +1,6 @@
 package ua.trasa.javaclass.geo;
 
-import ua.trasa.javaclass.domain.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 import static java.lang.Math.*;
-import static java.lang.Math.rint;
 
 public class ConverterCoordinateSystem {
 
@@ -120,123 +114,123 @@ public class ConverterCoordinateSystem {
 
 //-----------------------------------------------------------------
 
-    public static DDtoCK42 rezultsCK42( SourceDD source ) {
-
-        int latD = (int) abs(source.getLatD());
-        int latM = (int) (abs(source.getLatD() - latD) * 60);
-        double latS = rint((((source.getLatD() - latD) * 60) - latM) * 60 * 10000000) / 10000000;
-
-        int longD = (int) abs(source.getLongD());
-        int longM = (int) (abs(source.getLongD() - longD) * 60);
-        double longS = rint(((source.getLongD() - longD) * 60 - longM) * 60 * 10000000) / 10000000;
-
-        ConverterCoordinates wgs84toCk42 = new ConverterCoordinates();
-        wgs84toCk42.Wgs84ToCk42Converter(source.getLatD(), source.getLongD(), source.getAltitude());
-
-        BLHtoGK(wgs84toCk42.getLatitude42(), wgs84toCk42.getLongitude42(), wgs84toCk42.getAltitude42());
-
-        DDtoCK42 rezultDDtoCK42 = new DDtoCK42();
-
-        rezultDDtoCK42.setLatitudeDD(source.getLatD());
-        rezultDDtoCK42.setLongitudeDD(source.getLongD());
-        rezultDDtoCK42.setAltitudeDD(source.getAltitude());
-        rezultDDtoCK42.setMemo(source.getMemo());
-
-        rezultDDtoCK42.setLatD(latD);
-        rezultDDtoCK42.setLatM(latM);
-        rezultDDtoCK42.setLatS(latS);
-        rezultDDtoCK42.setLongD(longD);
-        rezultDDtoCK42.setLongM(longM);
-        rezultDDtoCK42.setLongS(longS);
-
-        rezultDDtoCK42.setXCK42(GK_x);
-        rezultDDtoCK42.setYCK42(GK_y);
-        rezultDDtoCK42.setHCK42(wgs84toCk42.getAltitude42());
-        rezultDDtoCK42.setZoneCK42((int) n);
-
-        return rezultDDtoCK42;
-    }
-
-    public static List<DDtoCK42> rezultDDtoCK42Bulk( List<SourceDD> sources ) {
-        return sources.stream().map(ConverterCoordinateSystem::rezultsCK42).collect(Collectors.toList());
-    }
-
-    //-----------------------------------------------------------------
-
-    public static DMStoCK42 rezCK42( SourceDMS source ) {
-
-        double latitudeDD = (Math.rint((source.getLatD() + Double.valueOf(source.getLatM()) / 60 + Double.valueOf(source.getLatS()) / 60 / 60) * 100000000) / 100000000);
-        double longitudeDD = (Math.rint((source.getLongD() + Double.valueOf(source.getLongM()) / 60 + Double.valueOf(source.getLongS()) / 60 / 60) * 100000000) / 100000000);
-
-        ConverterCoordinates wgs84toCk42 = new ConverterCoordinates();
-        wgs84toCk42.Wgs84ToCk42Converter(latitudeDD, longitudeDD, source.getAltitude());
-
-        BLHtoGK(wgs84toCk42.getLatitude42(), wgs84toCk42.getLongitude42(), wgs84toCk42.getAltitude42());
-
-        DMStoCK42 rezultDMStoCK42 = new DMStoCK42();
-
-        rezultDMStoCK42.setLatitudeDD(latitudeDD);
-        rezultDMStoCK42.setLongitudeDD(longitudeDD);
-
-        rezultDMStoCK42.setAltitudeDD(source.getAltitude());
-
-        rezultDMStoCK42.setLatD(source.getLatD());
-        rezultDMStoCK42.setLatM(source.getLatM());
-        rezultDMStoCK42.setLatS(source.getLatS());
-        rezultDMStoCK42.setLongD(source.getLongD());
-        rezultDMStoCK42.setLongM(source.getLongM());
-        rezultDMStoCK42.setLongS(source.getLongS());
-
-        rezultDMStoCK42.setXCK42(GK_x);
-        rezultDMStoCK42.setYCK42(GK_y);
-        rezultDMStoCK42.setHCK42(wgs84toCk42.getAltitude42());
-        rezultDMStoCK42.setZoneCK42((int) n);
-        rezultDMStoCK42.setMemo(source.getMemo());
-        return rezultDMStoCK42;
-    }
-
-    public static List<DMStoCK42> rezultDMStoCK42Bulk( List<SourceDMS> sources ) {
-        return sources.stream().map(ConverterCoordinateSystem::rezCK42).collect(Collectors.toList());
-    }
-
-
-//    ------------------------------------------------------------
-
-    public static CK42toDD rezultsCK42toDD( SourceDD source ) {
-
-        GKtoBLh(source.getLatD(), source.getLongD(), source.getAltitude());
-
-        ConverterCoordinates CK42toWGS84 = new ConverterCoordinates();
-        CK42toWGS84.Ck42ToWgs84Converter(Math.toDegrees(latitude42), Math.toDegrees(longitude42), altitude42);
-
-        int latD = (int) abs(CK42toWGS84.getLatitude84());
-        int latM = (int) (abs(CK42toWGS84.getLatitude84() - latD) * 60);
-        double latS = rint((((CK42toWGS84.getLatitude84() - latD) * 60) - latM) * 60 * 10000000) / 10000000;
-
-        int longD = (int) abs(CK42toWGS84.getLongitude84());
-        int longM = (int) (abs(CK42toWGS84.getLongitude84() - longD) * 60);
-        double longS = rint(((CK42toWGS84.getLongitude84() - longD) * 60 - longM) * 60 * 10000000) / 10000000;
-
-        CK42toDD rezultCK42toDD = new CK42toDD();
-        rezultCK42toDD.setXCK42(source.getLatD());
-        rezultCK42toDD.setYCK42(source.getLongD());
-        rezultCK42toDD.setHCK42(source.getAltitude());
-
-        rezultCK42toDD.setLatitudeDD(CK42toWGS84.getLatitude84());
-        rezultCK42toDD.setLongitudeDD(CK42toWGS84.getLongitude84());
-        rezultCK42toDD.setAltitudeDD(CK42toWGS84.getAltitude84());
-
-        rezultCK42toDD.setLatD(latD);
-        rezultCK42toDD.setLatM(latM);
-        rezultCK42toDD.setLatS(latS);
-        rezultCK42toDD.setLongD(longD);
-        rezultCK42toDD.setLongM(longM);
-        rezultCK42toDD.setLongS(longS);
-        rezultCK42toDD.setMemo(source.getMemo());
-        return rezultCK42toDD;
-    }
-
-    public static List<CK42toDD> rezultCK42toDDBulk( List<SourceDD> sources ) {
-        return sources.stream().map(ConverterCoordinateSystem::rezultsCK42toDD).collect(Collectors.toList());
-    }
+//    public static DDtoCK42 rezultsCK42( SourceDD source ) {
+//
+//        int latD = (int) abs(source.getLatD());
+//        int latM = (int) (abs(source.getLatD() - latD) * 60);
+//        double latS = rint((((source.getLatD() - latD) * 60) - latM) * 60 * 10000000) / 10000000;
+//
+//        int longD = (int) abs(source.getLongD());
+//        int longM = (int) (abs(source.getLongD() - longD) * 60);
+//        double longS = rint(((source.getLongD() - longD) * 60 - longM) * 60 * 10000000) / 10000000;
+//
+//        ConverterCoordinates wgs84toCk42 = new ConverterCoordinates();
+//        wgs84toCk42.Wgs84ToCk42Converter(source.getLatD(), source.getLongD(), source.getAltitude());
+//
+//        BLHtoGK(wgs84toCk42.getLatitude42(), wgs84toCk42.getLongitude42(), wgs84toCk42.getAltitude42());
+//
+//        DDtoCK42 rezultDDtoCK42 = new DDtoCK42();
+//
+//        rezultDDtoCK42.setLatitudeDD(source.getLatD());
+//        rezultDDtoCK42.setLongitudeDD(source.getLongD());
+//        rezultDDtoCK42.setAltitudeDD(source.getAltitude());
+//        rezultDDtoCK42.setMemo(source.getMemo());
+//
+//        rezultDDtoCK42.setLatD(latD);
+//        rezultDDtoCK42.setLatM(latM);
+//        rezultDDtoCK42.setLatS(latS);
+//        rezultDDtoCK42.setLongD(longD);
+//        rezultDDtoCK42.setLongM(longM);
+//        rezultDDtoCK42.setLongS(longS);
+//
+//        rezultDDtoCK42.setXCK42(GK_x);
+//        rezultDDtoCK42.setYCK42(GK_y);
+//        rezultDDtoCK42.setHCK42(wgs84toCk42.getAltitude42());
+//        rezultDDtoCK42.setZoneCK42((int) n);
+//
+//        return rezultDDtoCK42;
+//    }
+//
+//    public static List<DDtoCK42> rezultDDtoCK42Bulk( List<SourceDD> sources ) {
+//        return sources.stream().map(ConverterCoordinateSystem::rezultsCK42).collect(Collectors.toList());
+//    }
+//
+//    //-----------------------------------------------------------------
+//
+//    public static DMStoCK42 rezCK42( SourceDMS source ) {
+//
+//        double latitudeDD = (Math.rint((source.getLatD() + Double.valueOf(source.getLatM()) / 60 + Double.valueOf(source.getLatS()) / 60 / 60) * 100000000) / 100000000);
+//        double longitudeDD = (Math.rint((source.getLongD() + Double.valueOf(source.getLongM()) / 60 + Double.valueOf(source.getLongS()) / 60 / 60) * 100000000) / 100000000);
+//
+//        ConverterCoordinates wgs84toCk42 = new ConverterCoordinates();
+//        wgs84toCk42.Wgs84ToCk42Converter(latitudeDD, longitudeDD, source.getAltitude());
+//
+//        BLHtoGK(wgs84toCk42.getLatitude42(), wgs84toCk42.getLongitude42(), wgs84toCk42.getAltitude42());
+//
+//        DMStoCK42 rezultDMStoCK42 = new DMStoCK42();
+//
+//        rezultDMStoCK42.setLatitudeDD(latitudeDD);
+//        rezultDMStoCK42.setLongitudeDD(longitudeDD);
+//
+//        rezultDMStoCK42.setAltitudeDD(source.getAltitude());
+//
+//        rezultDMStoCK42.setLatD(source.getLatD());
+//        rezultDMStoCK42.setLatM(source.getLatM());
+//        rezultDMStoCK42.setLatS(source.getLatS());
+//        rezultDMStoCK42.setLongD(source.getLongD());
+//        rezultDMStoCK42.setLongM(source.getLongM());
+//        rezultDMStoCK42.setLongS(source.getLongS());
+//
+//        rezultDMStoCK42.setXCK42(GK_x);
+//        rezultDMStoCK42.setYCK42(GK_y);
+//        rezultDMStoCK42.setHCK42(wgs84toCk42.getAltitude42());
+//        rezultDMStoCK42.setZoneCK42((int) n);
+//        rezultDMStoCK42.setMemo(source.getMemo());
+//        return rezultDMStoCK42;
+//    }
+//
+//    public static List<DMStoCK42> rezultDMStoCK42Bulk( List<SourceDMS> sources ) {
+//        return sources.stream().map(ConverterCoordinateSystem::rezCK42).collect(Collectors.toList());
+//    }
+//
+//
+////    ------------------------------------------------------------
+//
+//    public static CK42toDD rezultsCK42toDD( SourceDD source ) {
+//
+//        GKtoBLh(source.getLatD(), source.getLongD(), source.getAltitude());
+//
+//        ConverterCoordinates CK42toWGS84 = new ConverterCoordinates();
+//        CK42toWGS84.Ck42ToWgs84Converter(Math.toDegrees(latitude42), Math.toDegrees(longitude42), altitude42);
+//
+//        int latD = (int) abs(CK42toWGS84.getLatitude84());
+//        int latM = (int) (abs(CK42toWGS84.getLatitude84() - latD) * 60);
+//        double latS = rint((((CK42toWGS84.getLatitude84() - latD) * 60) - latM) * 60 * 10000000) / 10000000;
+//
+//        int longD = (int) abs(CK42toWGS84.getLongitude84());
+//        int longM = (int) (abs(CK42toWGS84.getLongitude84() - longD) * 60);
+//        double longS = rint(((CK42toWGS84.getLongitude84() - longD) * 60 - longM) * 60 * 10000000) / 10000000;
+//
+//        CK42toDD rezultCK42toDD = new CK42toDD();
+//        rezultCK42toDD.setXCK42(source.getLatD());
+//        rezultCK42toDD.setYCK42(source.getLongD());
+//        rezultCK42toDD.setHCK42(source.getAltitude());
+//
+//        rezultCK42toDD.setLatitudeDD(CK42toWGS84.getLatitude84());
+//        rezultCK42toDD.setLongitudeDD(CK42toWGS84.getLongitude84());
+//        rezultCK42toDD.setAltitudeDD(CK42toWGS84.getAltitude84());
+//
+//        rezultCK42toDD.setLatD(latD);
+//        rezultCK42toDD.setLatM(latM);
+//        rezultCK42toDD.setLatS(latS);
+//        rezultCK42toDD.setLongD(longD);
+//        rezultCK42toDD.setLongM(longM);
+//        rezultCK42toDD.setLongS(longS);
+//        rezultCK42toDD.setMemo(source.getMemo());
+//        return rezultCK42toDD;
+//    }
+//
+//    public static List<CK42toDD> rezultCK42toDDBulk( List<SourceDD> sources ) {
+//        return sources.stream().map(ConverterCoordinateSystem::rezultsCK42toDD).collect(Collectors.toList());
+//    }
 }

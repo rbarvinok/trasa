@@ -7,10 +7,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import ua.trasa.javaclass.servisClass.AlertAndInform;
 
 public class Main extends Application {
-
-    public static String icoImage = "/images/031.png";
+    AlertAndInform inform = new AlertAndInform();
+    public static String icoImage = "/images/trasa_img.png";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -22,8 +23,14 @@ public class Main extends Application {
         //primaryStage.setMaximized(true);
         primaryStage.show();
 
-
-    }
+        primaryStage.setOnCloseRequest(event ->
+        {
+            inform.title = "Вихід з програми";
+            inform.hd = "Закрити програму?";
+            inform.ct = "Всі незбережені дані буде втрачено";
+            inform.confirmation(event);
+        });
+}
 
     public static void main(String[] args) {
         launch(args);
