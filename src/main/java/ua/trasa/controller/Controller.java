@@ -45,10 +45,13 @@ public class Controller implements Initializable {
     public int colsInpDate = 0;
     public static String openFile = "";
     public static String openDirectory;
-    public String status;
-    public String missionID, radarLat,radarLon, radarAlt;
-    public String launchLat, launchLon, launchAlt, launchX, launchY, launchZ;
-    public static double allTime, timeStart, timeStop;
+    public static String status = "Unknown";
+    public static String missionID, radarLat, radarLon, radarAlt;
+    public static String  slaveLat,  slaveLon,  slaveAlt;
+    public static String launchLat, launchLon, launchAlt, launchX, launchY, launchZ;
+    public static double allTime;
+    public static int lineCount;
+    private double timeStart, timeStop;
 
     public static List<InputDataMaster> inputDataMaster = new ArrayList<>();
     public static List<Master> master = new ArrayList<>();
@@ -97,14 +100,19 @@ public class Controller implements Initializable {
                 missionID = line.split(":")[1].trim();
             }
             if (lineNumber == 22) {
-                radarLat = line.split(":")[2].replace("Lon","");;
-                radarLon = line.split(":")[3].replace("Alt","");;
-                radarAlt = line.split(":")[4];
+                radarLat = line.split(":")[2].replace("Lon", "");
+                radarLon = line.split(":")[3].replace("Alt", "");
+                radarAlt = line.split(":")[4].replace("m (WGS84)","");
             }
             if (lineNumber == 29) {
-                launchLat = line.split(":")[2].replace("Lon","");
-                launchLon = line.split(":")[3].replace("Alt","");
-                launchAlt = line.split(":")[4];
+                launchLat = line.split(":")[2].replace("Lon", "");
+                launchLon = line.split(":")[3].replace("Alt", "");
+                launchAlt = line.split(":")[4].replace("m (WGS84)","");
+            }
+            if (lineNumber == 38) {
+                slaveLat = line.split(":")[2].replace("Lon", "");
+                slaveLon = line.split(":")[3].replace("Alt", "");
+                slaveAlt = line.split(":")[4].replace("m (WGS84)","");
             }
             if (lineNumber == 30) {
                 launchX = line.split(":")[1];
@@ -119,7 +127,6 @@ public class Controller implements Initializable {
                 timeStart = Double.parseDouble(line.split(",")[0]);
             }
 
-            //line = line.replaceAll(";", ",");
             String[] split = line.split(",");
 
             if (lineNumber < 57) {
@@ -140,9 +147,7 @@ public class Controller implements Initializable {
                     Double.parseDouble(split[9]),
                     Double.parseDouble(split[10]),
                     Double.parseDouble(split[11]),
-                    Double.parseDouble(split[12]),
-                    Double.parseDouble(split[13]),
-                    Double.parseDouble(split[14])
+                    Double.parseDouble(split[12])
             );
             inputDataMaster.add(idm);
 
@@ -153,65 +158,60 @@ public class Controller implements Initializable {
 
         tMaster.setDisable(false);
         tSlave.setDisable(false);
-
-        allTime = rint((timeStop-timeStart)*100000)/100000;
-        labelLineCount.setText("Строк: " + (lineNumber-57));
-        statusBar.setText("Файл: " + openFile + "      ID: " + missionID + "     Час супроводження: " + allTime);
+        tKML.setDisable(false);
+        lineCount = (lineNumber - 57);
+        allTime = rint((timeStop - timeStart) * 100000) / 100000;
+        labelLineCount.setText("Строк: " + lineCount);
+        statusBar.setText("Файл: " + openFile + "      ID: " + missionID + "     Час супроводження: " + allTime + " сек");
 
         inputDates(inputDataMaster);
         TableColumn<InputDate, String> tTime = new TableColumn<>("Час");
         TableColumn<InputDate, String> tTimeUTC = new TableColumn<>("Час UTC");
+        TableColumn<InputDate, String> tAz = new TableColumn<>("Азимут");
+        TableColumn<InputDate, String> tEl = new TableColumn<>("Кут місця");
+        TableColumn<InputDate, String> tRrad = new TableColumn<>("Похила дальність");
+        TableColumn<InputDate, String> tVrad = new TableColumn<>("Радіальна швидкість");
         TableColumn<InputDate, String> tX = new TableColumn<>("Дальність Х");
         TableColumn<InputDate, String> tY = new TableColumn<>("Висота Y");
         TableColumn<InputDate, String> tZ = new TableColumn<>("Зміщення Z");
-        TableColumn<InputDate, String> tVx = new TableColumn<>("Vx");
-        TableColumn<InputDate, String> tVy = new TableColumn<>("Vy");
-        TableColumn<InputDate, String> tVz = new TableColumn<>("Vz");
-        TableColumn<InputDate, String> tVrad = new TableColumn<>("V rad");
-        TableColumn<InputDate, String> tRrad = new TableColumn<>("Похила дальність");
-        TableColumn<InputDate, String> tAz = new TableColumn<>("Азимут");
-        TableColumn<InputDate, String> tEl = new TableColumn<>("Кут місця");
         TableColumn<InputDate, String> tLat = new TableColumn<>("Широта");
         TableColumn<InputDate, String> tLon = new TableColumn<>("Довгота");
-        TableColumn<InputDate, String> tVtang = new TableColumn<>("V танг");
+        TableColumn<InputDate, String> tAlt = new TableColumn<>("Висота");
+        TableColumn<InputDate, String> tSnr = new TableColumn<>("SNR");
 
-        for (int i = 0; i <= colsInpDate - 15; i++) {
+        for (int i = 0; i <= colsInpDate - 13; i++) {
             final int indexColumn = i;
             tTime.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(0 + indexColumn)));
             tTimeUTC.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(1 + indexColumn)));
-            tX.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(2 + indexColumn)));
-            tY.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(3 + indexColumn)));
-            tZ.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(4 + indexColumn)));
-            tVx.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(5 + indexColumn)));
-            tVy.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(6 + indexColumn)));
-            tVz.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(7 + indexColumn)));
-            tVrad.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(8 + indexColumn)));
-            tRrad.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(9 + indexColumn)));
-            tAz.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(10 + indexColumn)));
-            tEl.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(11 + indexColumn)));
-            tLat.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(12 + indexColumn)));
-            tLon.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(13 + indexColumn)));
-            tVtang.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(14 + indexColumn)));
+            tAz.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(2 + indexColumn)));
+            tEl.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(3 + indexColumn)));
+            tRrad.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(4 + indexColumn)));
+            tVrad.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(5 + indexColumn)));
+            tX.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(6 + indexColumn)));
+            tY.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(7 + indexColumn)));
+            tZ.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(8 + indexColumn)));
+            tLat.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(9 + indexColumn)));
+            tLon.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(10 + indexColumn)));
+            tAlt.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(11 + indexColumn)));
+            tSnr.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(12 + indexColumn)));
         }
-        outputTable.getColumns().addAll(tTime, tTimeUTC, tX,tY,tZ, tVx, tVy, tVz, tVrad, tRrad, tAz, tEl, tLat, tLon, tVtang);
+        outputTable.getColumns().addAll(tTime, tTimeUTC, tAz, tEl, tRrad, tVrad, tX, tY, tZ, tLat, tLon, tAlt, tSnr);
         outputTable.setItems(inputDatesList);
     }
 
-    public void onClickSlave() {
-        tSave.setDisable(false);
-        tKML.setDisable(false);
-        tChart.setDisable(false);
+    public void onClickMaster() {
+        status = "Master";
+        openExposeView();
     }
 
-    public void onClickMaster() {
-        tSave.setDisable(false);
-        tKML.setDisable(false);
-        tChart.setDisable(false);
+    public void onClickSlave() {
+        status = "Slave";
+        openExposeView();
     }
 
     public void onClickChart() throws IOException {
         os.viewURL = "/view/lineChart.fxml";
-        os.title = "Графік GPS   " + openFile;
+        os.title = "Графік  " + openFile +"    " + status;
         os.openStage();
     }
 
@@ -220,18 +220,27 @@ public class Controller implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Зберегти як...");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("*.xlsx", "*.xlsx"),
+                new FileChooser.ExtensionFilter("*.txt", "*.txt"),
                 new FileChooser.ExtensionFilter("*.csv", "*.csv"),
                 new FileChooser.ExtensionFilter("*.*", "*.*"));
-        fileChooser.setInitialFileName(openFile + "_result");
+        fileChooser.setInitialFileName(openFile + "_pos");
         File userDirectory = new File(openDirectory);
         fileChooser.setInitialDirectory(userDirectory);
         File file = fileChooser.showSaveDialog((new Stage()));
 
-
-        statusBar.setText("Успішно записано в файл  '" + openFile + "_result.csv");
+        statusBar.setText("Успішно записано в файл  '" + openFile + "_pos.txt");
     }
 
+    @SneakyThrows
+    private void openExposeView() {
+        tSave.setDisable(false);
+        tKML.setDisable(false);
+        tChart.setDisable(false);
+
+        os.viewURL = "/view/exposeView.fxml";
+        os.title = "Trasa  " + openFile;
+        os.openStage();
+    }
 
     public void inputDates(List source) {
         outputTable.getColumns().clear();
@@ -260,83 +269,76 @@ public class Controller implements Initializable {
 
     @SneakyThrows
     public void onClickKML() {
-        if (outputTable.getItems() == null) {
-            statusBar.setText("Помилка! Відсутні дані для рохрахунку");
-            inform.hd = "Помилка! Відсутні дані для рохрахунку";
-            inform.ct = " 1. Відкрити файл  даних \n 2. Натиснути кнопку Розрахувати \n 3. Зберегти розраховані дані в вихідний файл\n";
-            inform.alert();
-            statusBar.setText("");
-        } else {
-            //output to Table----------------------------------------
-            //inputDates(gpsTimes);
-            TableColumn<InputDate, String> tLong = new TableColumn<>("Довгота");
-            TableColumn<InputDate, String> tLat = new TableColumn<>("Широта");
-            TableColumn<InputDate, String> tAlt = new TableColumn<>("Висота");
+        status = "KML";
+        //output to Table----------------------------------------
+        inputDates(inputDataMaster);
+        TableColumn<InputDate, String> tLat = new TableColumn<>("Широта");
+        TableColumn<InputDate, String> tLong = new TableColumn<>("Довгота");
+        TableColumn<InputDate, String> tAlt = new TableColumn<>("Висота");
 
-            for (int i = 0; i <= colsInpDate - 6; i++) {
-                final int indexColumn = i;
-                tLat.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(2 + indexColumn)));
-                tLong.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(3 + indexColumn)));
-                tAlt.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(4 + indexColumn)));
-            }
-            outputTable.getColumns().addAll(tLong, tLat, tAlt);
-            outputTable.setItems(inputDatesList);
-            //--------------------------------------------------------
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Зберегти як...");
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter(".kml", "*.kml"));
-            fileChooser.setInitialFileName(openFile + "_kml");
-            File userDirectory = new File(openDirectory);
-            fileChooser.setInitialDirectory(userDirectory);
-
-            File file = fileChooser.showSaveDialog((new Stage()));
-
-            OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file, false), "UTF-8");
-            osw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            osw.write("<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n");
-            osw.write("<Document>\n");
-            osw.write("<name>" + openFile + "</name>\n");
-            osw.write("<visiblity>1</visiblity>\n");
-            osw.write("<description>Exported track data\n" + openFile + "</description>\n");
-            osw.write("\n");
-            osw.write("<Style id=\"trackcolor_" + openFile + "_1\">\n");
-            osw.write("<LineStyle>\n");
-            osw.write("<color>ff0ff0ff</color>\n");
-            osw.write("<width>4</width>\n");
-            osw.write("</LineStyle>\n");
-            osw.write("</Style>\n\n");
-            osw.write("<Placemark>\n");
-            osw.write("<name>" + openFile + "</name>\n");
-            osw.write("<visibility>1</visibility>\n");
-            osw.write("<description>Exported track data</description>\n");
-            osw.write("<styleUrl>#trackcolor_" + openFile + "_1\">\n</styleUrl>\n");
-            osw.write("<LineString>\n");
-            osw.write("<tessellate>1</tessellate>\n");
-            osw.write("<altitudeMode>absolute</altitudeMode>\n");
-            osw.write("<coordinates>\n");
-//            for (GPSTime gpsTimes : gpsTimes) {
-//                osw.write(gpsTimes.toStringKML());
-//            }
-            osw.write("</coordinates>\n");
-            osw.write("</LineString>\n");
-            osw.write("</Placemark>\n");
-            osw.write("</Document>\n");
-            osw.write("</kml>\n");
-            osw.close();
-
-            statusBar.setText("Успішно записано в файл '" + openFile + "_kml'");
-            inform.title = "Збереження файлу";
-            inform.hd = null;
-            inform.ct = "Успішно записано в файл '" + openFile + "_kml'";
-            inform.inform();
+        for (int i = 0; i <= colsInpDate - 6; i++) {
+            final int indexColumn = i;
+            tLat.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(2 + indexColumn)));
+            tLong.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(3 + indexColumn)));
+            tAlt.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(4 + indexColumn)));
         }
+        outputTable.getColumns().addAll(tLong, tLat, tAlt);
+        outputTable.setItems(inputDatesList);
+        //--------------------------------------------------------
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Зберегти як...");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter(".kml", "*.kml"));
+        fileChooser.setInitialFileName(openFile + "_kml");
+        File userDirectory = new File(openDirectory);
+        fileChooser.setInitialDirectory(userDirectory);
+
+        File file = fileChooser.showSaveDialog((new Stage()));
+
+        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file, false), "UTF-8");
+        osw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        osw.write("<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n");
+        osw.write("<Document>\n");
+        osw.write("<name>" + openFile + "</name>\n");
+        osw.write("<visiblity>1</visiblity>\n");
+        osw.write("<description>Exported track data\n" + openFile + "</description>\n");
+        osw.write("\n");
+        osw.write("<Style id=\"trackcolor_" + openFile + "_1\">\n");
+        osw.write("<LineStyle>\n");
+        osw.write("<color>0f0ff0ff</color>\n");
+        osw.write("<width>2</width>\n");
+        osw.write("</LineStyle>\n");
+        osw.write("</Style>\n\n");
+        osw.write("<Placemark>\n");
+        osw.write("<name>" + openFile + "</name>\n");
+        osw.write("<visibility>1</visibility>\n");
+        osw.write("<description>Exported track data</description>\n");
+        osw.write("<styleUrl>#trackcolor_" + openFile + "_1\">\n</styleUrl>\n");
+        osw.write("<LineString>\n");
+        osw.write("<tessellate>1</tessellate>\n");
+        osw.write("<altitudeMode>absolute</altitudeMode>\n");
+        osw.write("<coordinates>\n");
+        for (InputDataMaster inputDataMaster : inputDataMaster) {
+            osw.write(inputDataMaster.toStringKML());
+        }
+        osw.write("</coordinates>\n");
+        osw.write("</LineString>\n");
+        osw.write("</Placemark>\n");
+        osw.write("</Document>\n");
+        osw.write("</kml>\n");
+        osw.close();
+
+        statusBar.setText("Успішно записано в файл '" + openFile + "_kml'");
+        tChart.setDisable(false);
+        inform.title = "Збереження файлу";
+        inform.hd = null;
+        inform.ct = "Успішно записано в файл '" + openFile + "_kml'";
+        inform.inform();
     }
 
     @SneakyThrows
     public void onClickGoogleEarth() {
         Process process = Runtime.getRuntime().exec("cmd.exe /c start " + "googleearth/GoogleEarthPro.exe ");
-
     }
 
     @SneakyThrows
@@ -375,7 +377,7 @@ public class Controller implements Initializable {
 
     public void onClickSetup() throws IOException {
         os.viewURL = "/view/settings.fxml";
-        os.title = "Часовий пояс   " + openFile;
+        os.title = "Налаштування   " + openFile;
         os.isModality = true;
         os.isResizable = false;
         os.openStage();

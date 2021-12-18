@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="650.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.Controller">
+<VBox xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.Controller">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
@@ -50,18 +50,6 @@
                         <Tooltip text="Новий бланк" />
                     </tooltip>
                 </Button>
-                <Button fx:id="tSave" disable="true" mnemonicParsing="false" onAction="#onClickSave" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
-                    <tooltip>
-                        <Tooltip text="Зберегти в файл" />
-                    </tooltip>
-                    <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../images/save.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
             <Button fx:id="tOpenFile" layoutX="50.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickOpenFile" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
                <tooltip>
                   <Tooltip text="Зберегти в файл" />
@@ -74,27 +62,39 @@
                   </ImageView>
                </graphic>
             </Button>
+                <Button fx:id="tSave" disable="true" mnemonicParsing="false" onAction="#onClickSave" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <tooltip>
+                        <Tooltip text="Зберегти в файл" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/save.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
                 <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="0.0" />
             <Button fx:id="tMaster" disable="true" layoutX="140.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickMaster" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
                <tooltip>
                   <Tooltip text="Master" />
                </tooltip>
                <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/diagram1.png" />
+                        <Image url="@../images/master.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-                <Button fx:id="tSlave" disable="true" layoutX="90.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickSlave" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                <Button fx:id="tSlave" disable="true" layoutX="90.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickSlave" prefHeight="25.0" prefWidth="25.0" styleClass="button1" stylesheets="@../styles/day.css">
                     <tooltip>
                         <Tooltip text="Slave" />
                     </tooltip>
                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/calculator.png" />
+                                <Image url="@../images/slave.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -196,9 +196,9 @@
                 </Button>
             </items>
         </ToolBar>
-          <AnchorPane prefHeight="570.0" prefWidth="1125.0" VBox.vgrow="ALWAYS">
+          <AnchorPane prefHeight="625.0" prefWidth="1175.0">
               <children>
-            <TableView fx:id="outputTable" accessibleText="Відкрийте файл даних" layoutX="13.0" prefHeight="557.0" prefWidth="1125.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <TableView fx:id="outputTable" accessibleText="Відкрийте файл даних" layoutX="13.0" prefHeight="422.0" prefWidth="1125.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
               </children>
           </AnchorPane>
         <AnchorPane prefHeight="0.0" prefWidth="1125.0" VBox.vgrow="ALWAYS">

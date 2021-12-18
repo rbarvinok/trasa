@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.ExposeController">
+    <children>
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="Файл">
+                    <items>
+
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Інструменти">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onClickSlave" text="Розрахувати" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClickChart" text="Графік" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Налаштування">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onClickSetup" text="Часовий пояс" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <ToolBar prefHeight="35.0" prefWidth="665.0">
+            <items>
+                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="0.0" />
+            <Button fx:id="tMaster" layoutX="140.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickMaster" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+               <tooltip>
+                  <Tooltip text="Master" />
+               </tooltip>
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/master.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+                <Button fx:id="tSlave" layoutX="90.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickSlave" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <tooltip>
+                        <Tooltip text="Slave" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/slave.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="tChart" layoutX="140.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickChart" prefHeight="25.0" prefWidth="26.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <tooltip>
+                        <Tooltip text="Відобразити графік" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/Chart.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="4.0">
+                    <tooltip>
+                        <Tooltip text="Зактити програму" />
+                    </tooltip>
+                </Separator>
+                <Button id="b" fx:id="tPosition" layoutX="50.0" layoutY="9.0" mnemonicParsing="false" onAction="#positionDefinition" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/icon.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Визначення позиції" />
+                    </tooltip>
+                </Button>
+                <Separator layoutX="221.0" layoutY="10.0" orientation="VERTICAL" prefHeight="0.0" prefWidth="4.0">
+                    <tooltip>
+                        <Tooltip text="Зактити програму" />
+                    </tooltip>
+                </Separator>
+                <Button id="b" layoutX="50.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickSetup" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/options.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Веедення часового поясу" />
+                    </tooltip>
+                </Button>
+            </items>
+        </ToolBar>
+          <AnchorPane prefHeight="570.0" prefWidth="1125.0" VBox.vgrow="ALWAYS">
+              <children>
+            <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <AnchorPane prefHeight="51.0" prefWidth="749.0" VBox.vgrow="NEVER">
+                           <children>
+                              <Button id="b" fx:id="tTimerPlay" layoutX="14.0" layoutY="5.0" mnemonicParsing="false" onAction="#onClickTimerControls" prefHeight="45.0" prefWidth="45.0" styleClass="button1" stylesheets="@../styles/day.css">
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/player/play.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Веедення часового поясу" />
+                                 </tooltip>
+                              </Button>
+                              <Label fx:id="timerLabel" layoutX="455.0" layoutY="13.0" prefHeight="25.0" prefWidth="225.0" text="Label" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0" />
+                              <Button id="b" fx:id="tTimerStop" layoutX="77.0" layoutY="5.0" mnemonicParsing="false" onAction="#onClickTimerControls" prefHeight="44.0" prefWidth="44.0" styleClass="button1" stylesheets="@../styles/day.css">
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/player/stop.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Веедення часового поясу" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <TableView fx:id="outputTable" accessibleText="Відкрийте файл даних" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <LineChart style="-fx-border-color: grey;" title="Азимут" VBox.vgrow="ALWAYS">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </LineChart>
+                        <LineChart style="-fx-border-color: grey;" title="Кут місця" VBox.vgrow="ALWAYS">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </LineChart>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+              </children>
+          </AnchorPane>
+        <AnchorPane prefHeight="0.0" prefWidth="1125.0" VBox.vgrow="ALWAYS">
+            <children>
+                <TextField fx:id="statusBar" editable="false" layoutX="119.0" prefHeight="25.0" prefWidth="1131.0" promptText="Очікування вхідних даних" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="0.0" />
+                <TextField fx:id="labelLineCount" editable="false" layoutX="747.0" prefHeight="25.0" prefWidth="185.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <TextField fx:id="statusLabel" prefHeight="25.0" prefWidth="125.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></TextField>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>

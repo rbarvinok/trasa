@@ -9,31 +9,34 @@ public class InputDataMaster {
 
     private double time;
     private double timeUTC;
+    private double azimuth;
+    private double elevation;
+
+    private double radRange;
+    private double radVelocity;
     private double rangeX;
     private double heightY;
     private double offsetZ;
-    private double velocityX;
-    private double velocityY;
-    private double velocityZ;
-    private double radVelocity;
-    private double radRange;
-    private double azimuth;
-    private double elevation;
+
     private double latitude;
     private double longitude;
-    private double tangVelocity;
-
-    public InputDataMaster() { }
+    private double altitude;
+    private double snr;
 
     @AllArgsConstructor
     @Data
     public static class DD {
         private double latitude;
         private double longitude;
+        private double  altitude;
     }
     @Override
     public String toString() {
-        return  time + "," +timeUTC + "," +rangeX+ "," +heightY+ "," +offsetZ+ "," +velocityX+ "," +velocityY+ "," +velocityZ+ "," +radVelocity+ "," +radRange+ "," +azimuth + "," + elevation + "," + latitude+ "," + longitude + ","  + tangVelocity + "\n";
+        return  time + "," +timeUTC + "," +azimuth+ "," +elevation+ "," +radRange+ "," +radVelocity+ "," +rangeX+ "," +heightY+ "," +offsetZ+ "," +latitude+ "," +longitude + "," + altitude + "," + snr + "\n";
+    }
+
+    public String toStringKML() {
+        return  longitude+ "," + latitude + ","  + altitude + "\n";
     }
 
 }
