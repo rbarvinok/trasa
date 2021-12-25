@@ -40,6 +40,7 @@ public class Controller implements Initializable {
     OpenStage os = new OpenStage();
     FileChooserRun fileChooserRun = new FileChooserRun();
     GetSettings getSettings = new GetSettings();
+    ExposeController exposeController = new ExposeController();
 
     public static String localZone;
     public int colsInpDate = 0;
@@ -53,9 +54,9 @@ public class Controller implements Initializable {
     public static int lineCount;
     private double timeStart, timeStop;
 
-    public static List<InputDataMaster> inputDataMaster = new ArrayList<>();
-    public static List<Master> master = new ArrayList<>();
-    public static List<Slave> slave = new ArrayList<>();
+    public static List<InputDataMaster> inputDataMasters = new ArrayList<>();
+    public static List<Master> masters = new ArrayList<>();
+    public static List<Slave> slaves = new ArrayList<>();
     public ObservableList<InputDate> inputDatesList = FXCollections.observableArrayList();
 
     @FXML
@@ -72,7 +73,7 @@ public class Controller implements Initializable {
     }
 
     public void onClickOpenFile() {
-        if (inputDataMaster.isEmpty()) {
+        if (inputDataMasters.isEmpty()) {
             statusBar.setText("");
             fileChooserRun.openFileChooser();
             openFile = selectedOpenFile.getName().substring(0, selectedOpenFile.getName().length() - 4);
@@ -149,7 +150,7 @@ public class Controller implements Initializable {
                     Double.parseDouble(split[11]),
                     Double.parseDouble(split[12])
             );
-            inputDataMaster.add(idm);
+            inputDataMasters.add(idm);
 
             timeStop = Double.parseDouble(line.split(",")[0]);
             lineNumber++;
@@ -164,7 +165,7 @@ public class Controller implements Initializable {
         labelLineCount.setText("Строк: " + lineCount);
         statusBar.setText("Файл: " + openFile + "      ID: " + missionID + "     Час супроводження: " + allTime + " сек");
 
-        inputDates(inputDataMaster);
+        inputDates(inputDataMasters);
         TableColumn<InputDate, String> tTime = new TableColumn<>("Час");
         TableColumn<InputDate, String> tTimeUTC = new TableColumn<>("Час UTC");
         TableColumn<InputDate, String> tAz = new TableColumn<>("Азимут");
@@ -197,15 +198,17 @@ public class Controller implements Initializable {
         }
         outputTable.getColumns().addAll(tTime, tTimeUTC, tAz, tEl, tRrad, tVrad, tX, tY, tZ, tLat, tLon, tAlt, tSnr);
         outputTable.setItems(inputDatesList);
+
+        tOpenFile.setDisable(true);
     }
 
     public void onClickMaster() {
-        status = "Master";
+        status = "MASTER";
         openExposeView();
     }
 
     public void onClickSlave() {
-        status = "Slave";
+        status = "SLAVE";
         openExposeView();
     }
 
@@ -271,7 +274,7 @@ public class Controller implements Initializable {
     public void onClickKML() {
         status = "KML";
         //output to Table----------------------------------------
-        inputDates(inputDataMaster);
+        inputDates(inputDataMasters);
         TableColumn<InputDate, String> tLat = new TableColumn<>("Широта");
         TableColumn<InputDate, String> tLong = new TableColumn<>("Довгота");
         TableColumn<InputDate, String> tAlt = new TableColumn<>("Висота");
@@ -318,7 +321,7 @@ public class Controller implements Initializable {
         osw.write("<tessellate>1</tessellate>\n");
         osw.write("<altitudeMode>absolute</altitudeMode>\n");
         osw.write("<coordinates>\n");
-        for (InputDataMaster inputDataMaster : inputDataMaster) {
+        for (InputDataMaster inputDataMaster : inputDataMasters) {
             osw.write(inputDataMaster.toStringKML());
         }
         osw.write("</coordinates>\n");
@@ -370,9 +373,9 @@ public class Controller implements Initializable {
         outputTable.getItems().clear();
         statusBar.setText("");
         labelLineCount.setText("");
-        inputDataMaster.clear();
-        master.clear();
-        slave.clear();
+        inputDataMasters.clear();
+        masters.clear();
+        slaves.clear();
     }
 
     public void onClickSetup() throws IOException {

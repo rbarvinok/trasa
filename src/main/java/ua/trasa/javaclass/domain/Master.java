@@ -8,11 +8,14 @@ import lombok.Data;
 public class Master {
 
     private double time;
+    private double azimuth;
+    private double elevation;
+    private double radRange;
+    private double radVelocity;
     private double rangeX;
     private double heightY;
     private double offsetZ;
-    private double azimuth;
-    private double elevation;
+    private double snr;
 
     public Master() { }
 
@@ -32,7 +35,7 @@ public class Master {
 
     @Override
     public String toString() {
-        return  time + "," + azimuth + "," + elevation + "," + rangeX+ "," + heightY +  "\n";
+        return  time + "," + azimuth + "," + elevation + "," + radRange+ "," + radVelocity +  "\n";
     }
 
 }
