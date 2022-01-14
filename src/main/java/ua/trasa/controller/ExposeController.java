@@ -7,6 +7,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import lombok.SneakyThrows;
@@ -33,14 +36,17 @@ public class ExposeController implements Initializable {
     public int colsInpDate = 0;
     List<String> rateOfDeclinesStrings;
     public ObservableList<InputDate> inputDatesList = FXCollections.observableArrayList();
+    public ObservableList<XYChart.Data> az;
+    public ObservableList<XYChart.Data> el;
 
     @FXML
     public TableView table;
-    public Label timerLabel, testLabel;
+    public Label timerLabel, reversTime;
     public TextField statusLabel, statusBar;
     public TextField labelLineCount;
     public Button tPosition, tMaster, tSlave, tChart;
-    public Button tStartStop, tTimerStop;
+    public Button bStartStop, bTimerStop;
+    public LineChart chartAz, chartEl;
 
 
     @SneakyThrows
@@ -49,19 +55,55 @@ public class ExposeController implements Initializable {
         statusLabel.setText(status);
         labelLineCount.setText("Строк: " + lineCount);
         statusBar.setText("Файл: " + openFile + "     Час супроводження: " + allTime + " сек");
-        tStartStop.requestFocus();
-        testLabel.setText(String.valueOf(allTime));
+        bStartStop.requestFocus();
+        reversTime.setText("/  " + rint(allTime*100)/100);
         if (status.equals("MASTER"))
             onClickMaster();
         else onClickSlave();
         timer();
+        charts();
+
     }
+
+    public void charts() {
+        chartAz.getData().clear();
+        chartEl.getData().clear();
+
+        NumberAxis x = new NumberAxis();
+//        x.setAutoRanging(false);
+//        x.setForceZeroInRange(false);
+
+        NumberAxis y = new NumberAxis();
+//        y.setAutoRanging(false);
+//        y.setForceZeroInRange(false);
+
+        if (status.equals("MASTER")) {
+            getAzDataM();
+            getElDataM();
+        } else  if (status.equals("SLAVE")){
+            getAzDataS();
+            getElDataS();
+        }
+
+        XYChart.Series seriesAz = new XYChart.Series();
+        seriesAz.setData(az);
+
+        chartAz.getData().addAll(seriesAz);
+
+        XYChart.Series seriesEl = new XYChart.Series();
+
+        seriesEl.setData(el);
+        chartEl.getData().addAll(seriesEl);
+    }
+
+
 
     public void onClickMaster() {
         status = "MASTER";
         masters = mastersBulk(inputDataMasters);
         rateOfDeclinesStrings = masters.stream().map(Master::toString).collect(Collectors.toList());
         getTableData();
+        charts();
         statusLabel.setText(status);
     }
 
@@ -70,6 +112,7 @@ public class ExposeController implements Initializable {
         slaves = slaveBulk(inputDataMasters);
         rateOfDeclinesStrings = slaves.stream().map(Slave::toString).collect(Collectors.toList());
         getTableData();
+        charts();
         statusLabel.setText(status);
     }
 
@@ -96,10 +139,12 @@ public class ExposeController implements Initializable {
     public void findInTable(Double searchId) {
         table.getItems().stream()
                 //.filter(item -> item.getId() == searchId)
+                //.filter(item -> item.toString().equals(searchId))
                 .findAny()
                 .ifPresent(item -> {
                     table.getSelectionModel().select(item);
                     table.scrollTo(item);
+//                    System.out.println(searchId);
                 });
     }
 
@@ -121,8 +166,8 @@ public class ExposeController implements Initializable {
                     startTime = System.currentTimeMillis();
                 running.set(true);
                 super.start();
-                tStartStop.setGraphic(new ImageView("/images/player/pause.png"));
-                tTimerStop.setDisable(true);
+                bStartStop.setGraphic(new ImageView("/images/player/pause.png"));
+                bTimerStop.setDisable(true);
             }
 
             @Override
@@ -130,8 +175,8 @@ public class ExposeController implements Initializable {
                 stopTime = System.currentTimeMillis();
                 running.set(false);
                 super.stop();
-                tStartStop.setGraphic(new ImageView("/images/player/play.png"));
-                tTimerStop.setDisable(false);
+                bStartStop.setGraphic(new ImageView("/images/player/play.png"));
+                bTimerStop.setDisable(false);
             }
 
             @Override
@@ -139,12 +184,12 @@ public class ExposeController implements Initializable {
                 long now = System.currentTimeMillis();
                 time.set((now - startTime) / 1000.0);
                 currentTime = rint(time.getValue() * 100) / 100;
-                testLabel.setText(String.valueOf(rint((allTime - currentTime) * 100) / 100));
-                findInTable(time.getValue());
+                reversTime.setText("/  " + String.valueOf(rint((allTime - currentTime) * 100) / 100));
+                findInTable(rint(time.getValue() * 100) / 100);
             }
         };
 
-        tStartStop.setOnAction(e -> {
+        bStartStop.setOnAction(e -> {
             if (running.get()) {
                 timer.stop();
             } else {
@@ -157,6 +202,50 @@ public class ExposeController implements Initializable {
         os.viewURL = "/view/lineChart.fxml";
         os.title = "Графік   " + openFile;
         os.openStage();
+    }
+
+    public void getAzDataM() {
+        List<Master.TimeAz> azList = masters.stream().map(listAz -> {
+            return new Master.TimeAz(listAz.getTime(), listAz.getAzimuth());
+        }).collect(Collectors.toList());
+
+        az = FXCollections.observableArrayList();
+        for (Master.TimeAz azs : azList) {
+            az.add(new XYChart.Data(azs.getTime(), azs.getAzimuth()));
+        }
+    }
+
+    public void getElDataM() {
+        List<Master.TimeEl> elList = masters.stream().map(listEl -> {
+            return new Master.TimeEl(listEl.getTime(), listEl.getElevation());
+        }).collect(Collectors.toList());
+
+        el = FXCollections.observableArrayList();
+        for (Master.TimeEl els : elList) {
+            el.add(new XYChart.Data(els.getTime(), els.getElevation()));
+        }
+    }
+
+    public void getAzDataS() {
+        List<Slave.TimeAz> azList = slaves.stream().map(listAz -> {
+            return new Slave.TimeAz(listAz.getTime(), listAz.getAzimuthS());
+        }).collect(Collectors.toList());
+
+        az = FXCollections.observableArrayList();
+        for (Slave.TimeAz azs : azList) {
+            az.add(new XYChart.Data(azs.getTime(), azs.getAzimuthS()));
+        }
+    }
+
+    public void getElDataS() {
+        List<Slave.TimeEl> elList = slaves.stream().map(listEl -> {
+            return new Slave.TimeEl(listEl.getTime(), listEl.getElevationS());
+        }).collect(Collectors.toList());
+
+        el = FXCollections.observableArrayList();
+        for (Slave.TimeEl els : elList) {
+            el.add(new XYChart.Data(els.getTime(), els.getElevationS()));
+        }
     }
 
     @SneakyThrows

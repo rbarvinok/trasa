@@ -5,11 +5,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.focus.controller.LineChartController">
+<AnchorPane prefHeight="650.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.LineChartController">
    <children>
       <VBox prefHeight="650.0" prefWidth="961.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="194.0" AnchorPane.topAnchor="0.0">
          <children>
-            <LineChart fx:id="lineChart" alternativeColumnFillVisible="true" axisSortingPolicy="NONE" createSymbols="false" legendVisible="false" prefHeight="400.0" prefWidth="890.0" style="-fx-border-color: #d0d0d0;" stylesheets="@../styles/day.css" title="Широта / Довгота" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+            <LineChart fx:id="lineChart" alternativeColumnFillVisible="true" axisSortingPolicy="NONE" createSymbols="false" prefHeight="400.0" prefWidth="890.0" style="-fx-border-color: #d0d0d0;" stylesheets="@../styles/day.css" title="Широта / Довгота" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
               <xAxis>
                 <NumberAxis forceZeroInRange="false" label="Широта, град" side="BOTTOM">
                      <opaqueInsets>

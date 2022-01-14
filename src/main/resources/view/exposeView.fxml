@@ -112,7 +112,7 @@
                      <children>
                         <AnchorPane prefHeight="51.0" prefWidth="749.0" VBox.vgrow="NEVER">
                            <children>
-                              <Button id="b" fx:id="tStartStop" layoutX="14.0" layoutY="5.0" mnemonicParsing="false" onAction="#timer" prefHeight="45.0" prefWidth="45.0" styleClass="button1" stylesheets="@../styles/day.css">
+                              <Button id="b" fx:id="bStartStop" layoutX="14.0" layoutY="5.0" mnemonicParsing="false" onAction="#timer" prefHeight="45.0" prefWidth="45.0" styleClass="button1" stylesheets="@../styles/day.css">
                                  <graphic>
                                     <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -128,7 +128,7 @@
                                  <font>
                                     <Font name="System Bold Italic" size="24.0" />
                                  </font></Label>
-                              <Button id="b" fx:id="tTimerStop" layoutX="77.0" layoutY="5.0" mnemonicParsing="false" onAction="#timer" prefHeight="44.0" prefWidth="44.0" styleClass="button1" stylesheets="@../styles/day.css">
+                              <Button id="b" fx:id="bTimerStop" layoutX="77.0" layoutY="5.0" mnemonicParsing="false" onAction="#timer" prefHeight="44.0" prefWidth="44.0" styleClass="button1" stylesheets="@../styles/day.css">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -140,7 +140,10 @@
                                     <Tooltip text="Веедення часового поясу" />
                                  </tooltip>
                               </Button>
-                              <Label fx:id="testLabel" layoutX="313.0" layoutY="19.0" text="Label" />
+                              <Label fx:id="reversTime" layoutX="272.0" layoutY="8.0" prefHeight="35.0" prefWidth="125.0" textFill="#0b3de4">
+                                 <font>
+                                    <Font name="System Bold Italic" size="24.0" />
+                                 </font></Label>
                            </children>
                         </AnchorPane>
                         <TableView fx:id="table" accessibleText="Відкрийте файл даних" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
@@ -151,9 +154,9 @@
                   </VBox>
                   <VBox HBox.hgrow="ALWAYS">
                      <children>
-                        <LineChart style="-fx-border-color: grey;" title="Азимут" VBox.vgrow="ALWAYS">
+                        <LineChart fx:id="chartAz" createSymbols="false" legendVisible="false" style="-fx-border-color: grey;" title="Азимут" VBox.vgrow="ALWAYS">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <NumberAxis side="BOTTOM" />
                           </xAxis>
                           <yAxis>
                             <NumberAxis side="LEFT" />
@@ -165,9 +168,9 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </LineChart>
-                        <LineChart style="-fx-border-color: grey;" title="Кут місця" VBox.vgrow="ALWAYS">
+                        <LineChart fx:id="chartEl" createSymbols="false" legendVisible="false" style="-fx-border-color: grey;" title="Кут місця" VBox.vgrow="ALWAYS">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <NumberAxis side="BOTTOM" />
                           </xAxis>
                           <yAxis>
                             <NumberAxis side="LEFT" />

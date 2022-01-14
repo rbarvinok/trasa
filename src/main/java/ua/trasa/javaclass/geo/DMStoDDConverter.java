@@ -1,31 +1,30 @@
 package ua.trasa.javaclass.geo;
 
-import lombok.experimental.UtilityClass;
-
-@UtilityClass
 public class DMStoDDConverter {
+    int latD, latM, lonD, lonM;
+    double latS, lonS;
+    public static double latitudeDD, longitudeDD, altitudeDD;
 
-//    public static DMStoDD rezults (SourceDMS source) {
-//        DMStoDD rezultDMStoDD = new DMStoDD();
-//
-//        rezultDMStoDD.setLatD(source.getLatD());
-//        rezultDMStoDD.setLatM(source.getLatM());
-//        rezultDMStoDD.setLatS(source.getLatS());
-//        rezultDMStoDD.setLongD(source.getLongD());
-//        rezultDMStoDD.setLongM(source.getLongM());
-//        rezultDMStoDD.setLongS(source.getLongS());
-//
-//        rezultDMStoDD.setLatitudeDD(Math.rint((source.getLatD()+Double.valueOf(source.getLatM())/60+Double.valueOf(source.getLatS())/60/60)*100000000)/100000000);
-//        rezultDMStoDD.setLongitudeDD(Math.rint((source.getLongD()+Double.valueOf(source.getLongM())/60+Double.valueOf(source.getLongS())/60/60)*100000000)/100000000);
-//        rezultDMStoDD.setAltitudeDD(source.getAltitude());
-//        rezultDMStoDD.setMemo(source.getMemo());
-//
-//        return rezultDMStoDD;
-//    }
-//
-//    public static List<DMStoDD> rezultDMStoDDBulk(List<SourceDMS> sources) {
-//        return sources.stream().map(DMStoDDConverter::rezults).collect(Collectors.toList());
-//    }
+
+    public void DMStoDD(String latDMS, String lonDMS, String alt) {
+
+        latD = Integer.parseInt(String.valueOf(latDMS.split("°")[0]));
+        latM = Integer.parseInt(String.valueOf(latDMS.replace("'", "°").split("°")[1]));
+        latS = Double.parseDouble(latDMS.replaceAll("\"", "")
+                .replaceAll(",", ".")
+                .split("'")[1]);
+
+        lonD = Integer.parseInt(String.valueOf(lonDMS.split("°")[0]));
+        lonM = Integer.parseInt(String.valueOf(lonDMS.replace("'", "°").split("°")[1]));
+        lonS = Double.parseDouble(lonDMS.replaceAll("\"", "")
+                .replaceAll(",", ".")
+                .split("'")[1]);
+
+        latitudeDD = Math.rint((latD + Double.valueOf(latM) / 60 + Double.valueOf(latS) / 60 / 60) * 100000000) / 100000000;
+        longitudeDD = Math.rint((lonD + Double.valueOf(lonM) / 60 + Double.valueOf(lonS) / 60 / 60) * 100000000) / 100000000;
+        altitudeDD = Double.parseDouble(alt);
+
+    }
 }
 
 

@@ -21,6 +21,20 @@ public class Master {
 
     @AllArgsConstructor
     @Data
+    public static class TimeAz {
+        private double time;
+        private double azimuth;
+    }
+
+    @AllArgsConstructor
+    @Data
+    public static class TimeEl {
+        private double time;
+        private double elevation;
+    }
+
+    @AllArgsConstructor
+    @Data
     public static class GrandeTrack {
         private double rangeX;
         private double offsetZ;

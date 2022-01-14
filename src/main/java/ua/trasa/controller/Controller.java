@@ -160,6 +160,7 @@ public class Controller implements Initializable {
         tMaster.setDisable(false);
         tSlave.setDisable(false);
         tKML.setDisable(false);
+        tChart.setDisable(false);
         lineCount = (lineNumber - 57);
         allTime = rint((timeStop - timeStart) * 100000) / 100000;
         labelLineCount.setText("Строк: " + lineCount);
@@ -167,7 +168,7 @@ public class Controller implements Initializable {
 
         inputDates(inputDataMasters);
         TableColumn<InputDate, String> tTime = new TableColumn<>("Час");
-        TableColumn<InputDate, String> tTimeUTC = new TableColumn<>("Час UTC");
+        //TableColumn<InputDate, String> tTimeUTC = new TableColumn<>("Час UTC");
         TableColumn<InputDate, String> tAz = new TableColumn<>("Азимут");
         TableColumn<InputDate, String> tEl = new TableColumn<>("Кут місця");
         TableColumn<InputDate, String> tRrad = new TableColumn<>("Похила дальність");
@@ -180,23 +181,23 @@ public class Controller implements Initializable {
         TableColumn<InputDate, String> tAlt = new TableColumn<>("Висота");
         TableColumn<InputDate, String> tSnr = new TableColumn<>("SNR");
 
-        for (int i = 0; i <= colsInpDate - 13; i++) {
+        for (int i = 0; i <= colsInpDate - 12; i++) {
             final int indexColumn = i;
             tTime.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(0 + indexColumn)));
-            tTimeUTC.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(1 + indexColumn)));
-            tAz.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(2 + indexColumn)));
-            tEl.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(3 + indexColumn)));
-            tRrad.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(4 + indexColumn)));
-            tVrad.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(5 + indexColumn)));
-            tX.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(6 + indexColumn)));
-            tY.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(7 + indexColumn)));
-            tZ.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(8 + indexColumn)));
-            tLat.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(9 + indexColumn)));
-            tLon.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(10 + indexColumn)));
-            tAlt.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(11 + indexColumn)));
-            tSnr.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(12 + indexColumn)));
+           // tTimeUTC.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(1 + indexColumn)));
+            tAz.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(1 + indexColumn)));
+            tEl.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(2 + indexColumn)));
+            tRrad.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(3 + indexColumn)));
+            tVrad.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(4 + indexColumn)));
+            tX.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(5 + indexColumn)));
+            tY.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(6 + indexColumn)));
+            tZ.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(7 + indexColumn)));
+            tLat.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(8 + indexColumn)));
+            tLon.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(9 + indexColumn)));
+            tAlt.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(10 + indexColumn)));
+            tSnr.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(11 + indexColumn)));
         }
-        outputTable.getColumns().addAll(tTime, tTimeUTC, tAz, tEl, tRrad, tVrad, tX, tY, tZ, tLat, tLon, tAlt, tSnr);
+        outputTable.getColumns().addAll(tTime, tAz, tEl, tRrad, tVrad, tX, tY, tZ, tLat, tLon, tAlt, tSnr);
         outputTable.setItems(inputDatesList);
 
         tOpenFile.setDisable(true);
@@ -368,6 +369,7 @@ public class Controller implements Initializable {
         tSave.setDisable(true);
         tKML.setDisable(true);
         tChart.setDisable(true);
+        tOpenFile.setDisable(false);
 
         outputTable.getColumns().clear();
         outputTable.getItems().clear();

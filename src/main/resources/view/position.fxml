@@ -107,6 +107,7 @@
                         <Tooltip text="Веедення часового поясу" />
                     </tooltip>
                 </Button>
+            <Button fx:id="tDMStoDD" mnemonicParsing="false" onAction="#DMStoDD" text="Button" />
             </items>
         </ToolBar>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="120.0" prefWidth="1115.0" style="-fx-border-color: grey;" VBox.vgrow="ALWAYS">
@@ -135,6 +136,8 @@
                 <TextField fx:id="launcherLat" layoutX="88.0" layoutY="76.0" promptText="Довгота" />
                 <TextField fx:id="launcherLon" layoutX="253.0" layoutY="76.0" promptText="Широта" />
                 <TextField fx:id="launcherAlt" layoutX="415.0" layoutY="76.0" promptText="Висота" />
+            <Label fx:id="lDistMS" layoutX="593.0" layoutY="44.0" prefHeight="17.0" prefWidth="138.0" />
+            <Label fx:id="lAngMS" layoutX="779.0" layoutY="44.0" prefHeight="17.0" prefWidth="60.0" text="Label" />
             </children>
             <opaqueInsets>
                 <Insets />

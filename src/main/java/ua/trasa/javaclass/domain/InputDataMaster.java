@@ -28,11 +28,18 @@ public class InputDataMaster {
     public static class DD {
         private double latitude;
         private double longitude;
-        private double  altitude;
     }
+
+    @AllArgsConstructor
+    @Data
+    public static class Altitude {
+        private double time;
+        private double altitude;
+    }
+
     @Override
     public String toString() {
-        return  time + "," +timeUTC + "," +azimuth+ "," +elevation+ "," +radRange+ "," +radVelocity+ "," +rangeX+ "," +heightY+ "," +offsetZ+ "," +latitude+ "," +longitude + "," + altitude + "," + snr + "\n";
+        return  time + ","  +azimuth+ "," +elevation+ "," +radRange+ "," +radVelocity+ "," +rangeX+ "," +heightY+ "," +offsetZ+ "," +latitude+ "," +longitude + "," + altitude + "," + snr + "\n";
     }
 
     public String toStringKML() {
