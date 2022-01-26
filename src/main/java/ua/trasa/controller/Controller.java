@@ -87,7 +87,7 @@ public class Controller implements Initializable {
     }
 
     @SneakyThrows
-    public void openInputData() {
+    public void openInputData(){
         status = "InputData";
 
         FileReader fileReader = new FileReader(selectedOpenFile);
@@ -168,7 +168,6 @@ public class Controller implements Initializable {
 
         inputDates(inputDataMasters);
         TableColumn<InputDate, String> tTime = new TableColumn<>("Час");
-        //TableColumn<InputDate, String> tTimeUTC = new TableColumn<>("Час UTC");
         TableColumn<InputDate, String> tAz = new TableColumn<>("Азимут");
         TableColumn<InputDate, String> tEl = new TableColumn<>("Кут місця");
         TableColumn<InputDate, String> tRrad = new TableColumn<>("Похила дальність");
@@ -184,7 +183,6 @@ public class Controller implements Initializable {
         for (int i = 0; i <= colsInpDate - 12; i++) {
             final int indexColumn = i;
             tTime.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(0 + indexColumn)));
-           // tTimeUTC.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(1 + indexColumn)));
             tAz.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(1 + indexColumn)));
             tEl.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(2 + indexColumn)));
             tRrad.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getItems().get(3 + indexColumn)));
