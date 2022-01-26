@@ -17,8 +17,8 @@ public class SlaveCalculate {
 //        http://ru.solverbook.com/spravochnik/formuly-po-geometrii/treugolnik/reshenie-treugolnikov/
 
         double rRS = sqrt(pow(inputDataMaster.getRadRange(), 2) + pow(distanceMS, 2) - 2 * inputDataMaster.getRadRange() * distanceMS * cos(toRadians(inputDataMaster.getAzimuth())));
-        double azS = toDegrees(asin(inputDataMaster.getOffsetZ() * sin(toRadians(inputDataMaster.getAzimuth())) /rRS));
-        double elS =  toDegrees(asin(inputDataMaster.getHeightY() * sin(toRadians(inputDataMaster.getElevation())) /rRS));
+        double azS = toDegrees(asin(inputDataMaster.getRadRange() * sin(toRadians(inputDataMaster.getAzimuth())) /rRS));
+        double elS = toDegrees(asin(inputDataMaster.getRadRange() * sin(toRadians(inputDataMaster.getElevation())) /rRS));
 
         Slave slave = new Slave();
         slave.setTime(rint(inputDataMaster.getTime() * 100) / 100);

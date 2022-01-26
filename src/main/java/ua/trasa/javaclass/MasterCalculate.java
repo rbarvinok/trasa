@@ -7,6 +7,8 @@ import ua.trasa.javaclass.domain.Master;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.Math.rint;
+
 @UtilityClass
 public class MasterCalculate {
 
@@ -14,10 +16,10 @@ public class MasterCalculate {
 
         Master master = new Master();
 
-        master.setTime(Math.rint(inputDataMaster.getTime()*100)/100);
-        master.setAzimuth(inputDataMaster.getAzimuth());
-        master.setElevation(inputDataMaster.getElevation());
-        master.setRadRange(inputDataMaster.getRadRange());
+        master.setTime(rint(inputDataMaster.getTime()*100)/100);
+        master.setAzimuth(rint(inputDataMaster.getAzimuth()*100)/100);
+        master.setElevation(rint(inputDataMaster.getElevation()*100)/100);
+        master.setRadRange(rint(inputDataMaster.getRadRange()*1000)/1000);
         master.setRadVelocity(inputDataMaster.getRadVelocity());
         master.setRangeX(inputDataMaster.getRangeX());
         master.setHeightY(inputDataMaster.getHeightY());

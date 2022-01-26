@@ -24,7 +24,6 @@ public class ControllerPosition implements Initializable {
     OgzWGS84Calculator ogz = new OgzWGS84Calculator();
 
 
-
     public static double distanceMS, angleMS;
 
     @FXML
@@ -39,6 +38,9 @@ public class ControllerPosition implements Initializable {
     @SneakyThrows
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if (radarLat.substring(0, 1).equals("+")) {
+            DMStoDD();
+        }
         mLat.setText(radarLat);
         mLon.setText(radarLon);
         mAlt.setText(radarAlt);
@@ -51,37 +53,39 @@ public class ControllerPosition implements Initializable {
         launcherLon.setText(launchLon);
         launcherAlt.setText(launchAlt);
 
-        getDistAndAng ();
+        getDistAndAngMS();
         lDistMS.setText(String.valueOf(distanceMS));
         lAngMS.setText(String.valueOf(angleMS));
 
     }
 
-    public void getDistAndAng (){
-//        dmsToDDConverter.DMStoDD(radarLat,radarLon,radarAlt);
-//        dmsToDDConverter.DMStoDD(slaveLat,slaveLon,slaveAlt);
-
-        ogz.ogz84(radarLat,radarLon,radarAlt,slaveLat,slaveLon,slaveAlt);
-        distanceMS=ogz.distance;
-        angleMS=ogz.ang;
-
+    public void getDistAndAngMS() {
+        ogz.ogz84(radarLat, radarLon, radarAlt, slaveLat, slaveLon, slaveAlt);
+        if (radarLat.equals(slaveLat)&&radarLon.equals(slaveLon)) {
+            distanceMS = 0.0000;
+            angleMS = 0.00;
+        } else {
+            ogz.ogz84(radarLat, radarLon, radarAlt, slaveLat, slaveLon, slaveAlt);
+            distanceMS = ogz.distance;
+            angleMS = ogz.ang;
+        }
     }
 
-    public void DMStoDD(){
-        dmsToDDConverter.DMStoDD(radarLat,radarLon,radarAlt);
-        mLat.setText(String.valueOf(latitudeDD));
-        mLon.setText(String.valueOf(longitudeDD));
-        mAlt.setText(String.valueOf(altitudeDD));
+    public void DMStoDD() {
+        dmsToDDConverter.DMStoDD(radarLat, radarLon, radarAlt);
+        radarLat = String.valueOf(latitudeDD);
+        radarLon = String.valueOf(longitudeDD);
+        radarAlt = String.valueOf(altitudeDD);
 
-        dmsToDDConverter.DMStoDD(slaveLat,slaveLon,slaveAlt);
-        sLat.setText(String.valueOf(latitudeDD));
-        sLon.setText(String.valueOf(longitudeDD));
-        sAlt.setText(String.valueOf(altitudeDD));
+        dmsToDDConverter.DMStoDD(slaveLat, slaveLon, slaveAlt);
+        slaveLat = String.valueOf(latitudeDD);
+        slaveLon = String.valueOf(longitudeDD);
+        slaveAlt = String.valueOf(altitudeDD);
 
-        dmsToDDConverter.DMStoDD(launchLat,launchLon,launchAlt);
-        launcherLat.setText(String.valueOf(latitudeDD));
-        launcherLon.setText(String.valueOf(longitudeDD));
-        launcherAlt.setText(String.valueOf(altitudeDD));
+        dmsToDDConverter.DMStoDD(launchLat, launchLon, launchAlt);
+        launchLat = String.valueOf(latitudeDD);
+        launchLon = String.valueOf(longitudeDD);
+        launchAlt = String.valueOf(altitudeDD);
     }
 
     public void onClickNew(ActionEvent e) {
