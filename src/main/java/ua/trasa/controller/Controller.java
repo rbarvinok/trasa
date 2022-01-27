@@ -101,8 +101,8 @@ public class Controller implements Initializable {
                 missionID = line.split(":")[1].trim();
             }
             if (lineNumber == 22) {
-                radarLat = line.split(":")[2].replace("Lon", "");
-                radarLon = line.split(":")[3].replace("Alt", "");
+                radarLat = line.split(":")[2].replace("Lon", "").trim();
+                radarLon = line.split(":")[3].replace("Alt", "").trim();
                 radarAlt = line.split(":")[4].replace("m (WGS84)","");
             }
             if (lineNumber == 29) {

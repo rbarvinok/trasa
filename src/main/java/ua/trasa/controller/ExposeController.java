@@ -70,12 +70,7 @@ public class ExposeController implements Initializable {
         chartEl.getData().clear();
 
         NumberAxis x = new NumberAxis();
-//        x.setAutoRanging(false);
-//        x.setForceZeroInRange(false);
-
         NumberAxis y = new NumberAxis();
-//        y.setAutoRanging(false);
-//        y.setForceZeroInRange(false);
 
         if (status.equals("MASTER")) {
             getAzDataM();
@@ -95,8 +90,6 @@ public class ExposeController implements Initializable {
         seriesEl.setData(el);
         chartEl.getData().addAll(seriesEl);
     }
-
-
 
     public void onClickMaster() {
         status = "MASTER";
@@ -144,7 +137,7 @@ public class ExposeController implements Initializable {
                 .ifPresent(item -> {
                     table.getSelectionModel().select(item);
                     table.scrollTo(item);
-//                    System.out.println(searchId);
+                    System.out.println(searchId);
                 });
     }
 

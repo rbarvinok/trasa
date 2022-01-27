@@ -24,6 +24,7 @@ import static ua.trasa.controller.Controller.*;
 
 public class LineChartController implements Initializable {
     OpenStage os = new OpenStage();
+    ControllerPosition controllerPosition = new ControllerPosition();
     public static ObservableList<XYChart.Data> gps;
     public static ObservableList<XYChart.Data> alt;
 
@@ -34,6 +35,8 @@ public class LineChartController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if (radarLat.substring(0, 1).equals("+"))
+            controllerPosition.DMStoDD();
 
         NumberAxis x = new NumberAxis();
         x.setAutoRanging(false);

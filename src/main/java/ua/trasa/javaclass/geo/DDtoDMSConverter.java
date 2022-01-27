@@ -1,45 +1,26 @@
 package ua.trasa.javaclass.geo;
 
-import lombok.experimental.UtilityClass;
+import static java.lang.Math.abs;
+import static java.lang.Math.rint;
 
-@UtilityClass
 public class DDtoDMSConverter {
-    int latD;
-    int latM;
-    double latS;
-    int longD;
-    int longM;
-    double longS;
+    public static int latD, latM;
+    public static double latS;
+    public static int longD, longM;
+    public static double longS, altDMS;
 
-//    public static DDtoDMS results( SourceDD source ) {
-//        DDtoDMS resultDDtoDMS = new DDtoDMS();
-//
-//        latD = (int) abs(source.getLatD());
-//        latM = (int) (abs(source.getLatD() - latD) * 60);
-//        latS = rint((((source.getLatD() - latD) * 60) - latM) * 60 * 10000000) / 10000000;
-//
-//        longD = (int) abs(source.getLongD());
-//        longM = (int) (abs(source.getLongD() - longD) * 60);
-//        longS = rint(((source.getLongD() - longD) * 60 - longM) * 60 * 10000000) / 10000000;
-//
-//        resultDDtoDMS.setLatitudeDD(source.getLatD());
-//        resultDDtoDMS.setLongitudeDD(source.getLongD());
-//        resultDDtoDMS.setLatD(latD);
-//        resultDDtoDMS.setLatM(latM);
-//        resultDDtoDMS.setLatS(latS);
-//        resultDDtoDMS.setLongD(longD);
-//        resultDDtoDMS.setLongM(longM);
-//        resultDDtoDMS.setLongS(longS);
-//        resultDDtoDMS.setMemo(source.getMemo());
-//
-//        resultDDtoDMS.setAltitudeDD(source.getAltitude());
-//
-//        return resultDDtoDMS;
-//    }
-//
-//    public static List<DDtoDMS> resultDDtoDMSBulk( List<SourceDD> sources ) {
-//        return sources.stream().map(DDtoDMSConverter::results).collect(Collectors.toList());
-//    }
+    public void DDtoDMS(String latDD, String lonDD, String alt) {
+        latD = (int)abs(Integer.parseInt(latDD));
+        latM = abs(Integer.parseInt(latDD) - latD) * 60;
+        latS = rint((((Integer.parseInt(latDD) - latD) * 60) - latM) * 60 * 10000000) / 10000000;
+
+        longD = abs(Integer.parseInt(lonDD));
+        longM = abs(Integer.parseInt(lonDD) - longD) * 60;
+        longS = rint((((Integer.parseInt(lonDD) - longD) * 60) - longM) * 60 * 10000000) / 10000000;
+
+        altDMS = Double.parseDouble(alt);
+
+    }
 }
 
 

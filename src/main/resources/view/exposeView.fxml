@@ -94,12 +94,12 @@
                     <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/options.png" />
+                                <Image url="@../images/minimaze.png" />
                             </image>
                         </ImageView>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="Веедення часового поясу" />
+                        <Tooltip text="Вікно у вікні" />
                     </tooltip>
                 </Button>
             </items>
@@ -121,7 +121,7 @@
                                     </ImageView>
                                  </graphic>
                                  <tooltip>
-                                    <Tooltip text="Веедення часового поясу" />
+                                    <Tooltip text="Старт / Пауза" />
                                  </tooltip>
                               </Button>
                               <Label fx:id="timerLabel" alignment="CENTER" layoutX="156.0" layoutY="10.0" prefHeight="35.0" prefWidth="116.0" textAlignment="CENTER" textFill="#0b3de4">
@@ -137,7 +137,7 @@
                                     </ImageView>
                                  </graphic>
                                  <tooltip>
-                                    <Tooltip text="Веедення часового поясу" />
+                                    <Tooltip text="Зупинити" />
                                  </tooltip>
                               </Button>
                               <Label fx:id="reversTime" layoutX="272.0" layoutY="8.0" prefHeight="35.0" prefWidth="125.0" textFill="#0b3de4">
