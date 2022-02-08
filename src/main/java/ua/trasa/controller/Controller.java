@@ -87,7 +87,7 @@ public class Controller implements Initializable {
     }
 
     @SneakyThrows
-    public void openInputData() {
+    public void openInputData(){
         status = "InputData";
 
         FileReader fileReader = new FileReader(selectedOpenFile);
