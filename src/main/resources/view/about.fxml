@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="about" cacheShape="false" centerShape="false" focusTraversable="true" onDragDetected="#OnClick_btnAboutExit" prefHeight="500.0" prefWidth="600.0" scaleShape="false" stylesheets="@../styles/day.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.Controller_about">
+<AnchorPane id="about" cacheShape="false" centerShape="false" focusTraversable="true" onDragDetected="#OnClick_btnAboutExit" prefHeight="500.0" prefWidth="600.0" scaleShape="false" stylesheets="@../styles/day.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.Controller_about">
    <children>
-      <ImageView fitHeight="365.0" fitWidth="383.0" layoutX="158.0" layoutY="68.0" onDragDetected="#OnClick_btnAboutExit" onKeyPressed="#OnClick_btnAboutExit" onMouseDragEntered="#OnClick_btnAboutExit" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="500.0" fitWidth="479.0" layoutX="91.0" layoutY="11.0" onDragDetected="#OnClick_btnAboutExit" onKeyPressed="#OnClick_btnAboutExit" onMouseDragEntered="#OnClick_btnAboutExit" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/031.png" />
+            <Image url="@../images/03.png" />
          </image>
       </ImageView>
       <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="13.0" layoutY="86.0" mouseTransparent="true" prefHeight="185.0" prefWidth="638.0" text="“Визначення прогнозованої траєкторії польоту об’єкту вимірювань і забезпечення наведення радарних систем”" textAlignment="CENTER" textFill="#cf1b27" textOverrun="LEADING_WORD_ELLIPSIS" wrapText="true">
@@ -46,14 +46,14 @@
             <DropShadow height="20.76" radius="11.4225" spread="0.37" width="26.93" />
          </effect>
       </Label>
-      <Label layoutX="548.0" layoutY="455.0" text="2021 рік" textFill="#1d1e1e">
+      <Label layoutX="548.0" layoutY="455.0" text="2022 рік" textFill="#1d1e1e">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="162.0" layoutY="33.0" prefHeight="63.0" prefWidth="339.0" text="TRASA" textAlignment="CENTER" textFill="#da0e18">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="162.0" layoutY="33.0" prefHeight="63.0" prefWidth="337.0" text="TRASA" textAlignment="CENTER" textFill="#0fd928">
          <font>
-            <Font name="Verdana Bold" size="48.0" />
+            <Font name="Verdana Bold Italic" size="48.0" />
          </font>
          <effect>
             <DropShadow spread="0.51" />

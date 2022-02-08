@@ -77,22 +77,24 @@ public class ControllerPosition implements Initializable {
         launchLat = String.valueOf(latitudeDD);
         launchLon = String.valueOf(longitudeDD);
         launchAlt = String.valueOf(altitudeDD);
+        update();
+        tDMSorDD.setText("Градуси, мінути, секунди");
     }
 
     public void DDtoDMS() {
         dDtoDMSConverter.DDtoDMS(radarLat, radarLon, radarAlt);
-        radarLat = "+0"+latD+"°"+latM+"'"+latS+"''";
-        radarLon = "+0"+longD+"°"+longM+"'"+longS+"''";
+        radarLat = "+0" + latD + "°" + latM + "'" + latS + "''";
+        radarLon = "+0" + longD + "°" + longM + "'" + longS + "''";
         radarAlt = String.valueOf(altDMS);
 
         dDtoDMSConverter.DDtoDMS(slaveLat, slaveLon, slaveAlt);
-        slaveLat = "+0"+latD+"°"+latM+"'"+latS+"''";
-        slaveLon = "+0"+longD+"°"+longM+"'"+longS+"''";
+        slaveLat = "+0" + latD + "°" + latM + "'" + latS + "''";
+        slaveLon = "+0" + longD + "°" + longM + "'" + longS + "''";
         slaveAlt = String.valueOf(altDMS);
 
         dDtoDMSConverter.DDtoDMS(launchLat, launchLon, launchAlt);
-        launchLat = "+0"+latD+"°"+latM+"'"+latS+"''";
-        launchLon = "+0"+longD+"°"+longM+"'"+longS+"''";
+        launchLat = "+0" + latD + "°" + latM + "'" + latS + "''";
+        launchLon = "+0" + longD + "°" + longM + "'" + longS + "''";
         launchAlt = String.valueOf(altDMS);
 
         mLat.setText(radarLat);
@@ -106,19 +108,21 @@ public class ControllerPosition implements Initializable {
         launcherLat.setText(launchLat);
         launcherLon.setText(launchLon);
         launcherAlt.setText(launchAlt);
+        tDMSorDD.setText("Градуси");
     }
 
     public void ChoiceDDorDMS() {
         if (tDMSorDD.getText().equals("Градуси, мінути, секунди")) {
-            tDMSorDD.setText("Градуси");
             DDtoDMS();
         } else if (tDMSorDD.getText().equals("Градуси")) {
-            tDMSorDD.setText("Градуси, мінути, секунди");
             DMStoDD();
         }
     }
 
     public void onClickMaster() {
+        if (radarLat.substring(0, 1).equals("+"))
+            DMStoDD();
+
         tMaster.setDisable(true);
         tSlave.setDisable(false);
         if (radarLat.equals(slaveLat) && radarLon.equals(slaveLon)) {
@@ -142,6 +146,9 @@ public class ControllerPosition implements Initializable {
     }
 
     public void onClickSlave() {
+        if (radarLat.substring(0, 1).equals("+"))
+            DMStoDD();
+
         tMaster.setDisable(false);
         tSlave.setDisable(true);
         ogz.ogz84(slaveLat, slaveLon, slaveAlt, radarLat, radarLon, radarAlt);
@@ -181,19 +188,26 @@ public class ControllerPosition implements Initializable {
         }
     }
 
-    public void onClickApply() {
-        radarLat = mLat.getText();
-        radarLon = mLon.getText();
-        radarAlt = mAlt.getText();
-        slaveLat = sLat.getText();
-        slaveLon = sLon.getText();
-        slaveAlt = sAlt.getText();
-        launchLat = launcherLat.getText();
-        launchLon = launcherLon.getText();
-        launchAlt = launcherAlt.getText();
-        update();
-        onClickMaster();
-        onClickCancel();
+    public void onClickApply() throws NumberFormatException {
+        try {
+            radarLat = mLat.getText();
+            radarLon = mLon.getText();
+            radarAlt = mAlt.getText();
+            slaveLat = sLat.getText();
+            slaveLon = sLon.getText();
+            slaveAlt = sAlt.getText();
+            launchLat = launcherLat.getText();
+            launchLon = launcherLon.getText();
+            launchAlt = launcherAlt.getText();
+            update();
+            onClickMaster();
+            onClickCancel();
+        } catch (NumberFormatException e) {
+            inform.hd = "Помилка";
+            inform.ct = "Невірний формат даних \n";
+            inform.alert();
+            return;
+        }
     }
 
     public void onClickCancel() {

@@ -69,7 +69,7 @@ public class Controller implements Initializable {
     @SneakyThrows
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        getSettings.getSettings();
+        //getSettings.getSettings();
     }
 
     public void onClickOpenFile() {
