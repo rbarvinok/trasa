@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.ExposeController">
+<VBox prefHeight="655.0" prefWidth="1070.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.ExposeController">
     <children>
-        <MenuBar VBox.vgrow="NEVER">
+        <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
             <menus>
                 <Menu mnemonicParsing="false" text="Файл">
                     <items>
@@ -85,38 +85,62 @@
                         <Tooltip text="Визначення позиції" />
                     </tooltip>
                 </Button>
+            <Button id="b" fx:id="tSettsngs" layoutX="147.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickSettings" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/options.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Налаштування відображення вікна" />
+               </tooltip>
+            </Button>
                 <Separator layoutX="221.0" layoutY="10.0" orientation="VERTICAL" prefHeight="0.0" prefWidth="4.0">
                     <tooltip>
                         <Tooltip text="Зактити програму" />
                     </tooltip>
                 </Separator>
-                <Button id="b" fx:id="tMin" layoutX="50.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickMinimize" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+                <Button id="b" fx:id="tInfo" layoutX="50.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickMoreInformation" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
                     <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/minimaze.png" />
+                                <Image url="@../images/property.png" />
                             </image>
                         </ImageView>
                     </graphic>
                     <tooltip>
-                        <Tooltip text="Вікно у вікні" />
+                        <Tooltip text="Більше інформації" />
                     </tooltip>
                 </Button>
+            <Button id="b" fx:id="tMin" layoutX="237.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickMinimize" prefHeight="20.0" prefWidth="20.0" styleClass="button1" stylesheets="@../styles/day.css">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/minimaze.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Вікно у вікні" />
+               </tooltip>
+            </Button>
             </items>
         </ToolBar>
           <AnchorPane prefHeight="570.0" prefWidth="1125.0" VBox.vgrow="ALWAYS">
               <children>
             <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <VBox HBox.hgrow="ALWAYS">
+                  <VBox prefHeight="570.0" prefWidth="487.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <AnchorPane prefHeight="51.0" prefWidth="749.0" VBox.vgrow="NEVER">
+                        <AnchorPane prefHeight="27.0" prefWidth="523.0" VBox.vgrow="NEVER">
                            <children>
-                              <Button id="b" fx:id="bStartStop" layoutX="14.0" layoutY="5.0" mnemonicParsing="false" onAction="#timer" prefHeight="45.0" prefWidth="45.0" styleClass="button1" stylesheets="@../styles/day.css">
+                              <Button id="b" fx:id="bStartStop" layoutX="14.0" layoutY="5.0" mnemonicParsing="false" onAction="#timer" prefHeight="30.0" prefWidth="30.0" styleClass="button1" stylesheets="@../styles/day.css">
                                  <graphic>
-                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../images/player/play.png" />
+                                          <Image url="@../images/player/play1.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -124,13 +148,13 @@
                                     <Tooltip text="Старт / Пауза" />
                                  </tooltip>
                               </Button>
-                              <Label fx:id="timerLabel" alignment="CENTER" layoutX="156.0" layoutY="10.0" prefHeight="35.0" prefWidth="116.0" textAlignment="CENTER" textFill="#0b3de4">
+                              <Label fx:id="timerLabel" alignment="CENTER" layoutX="121.0" layoutY="8.0" prefHeight="25.0" prefWidth="116.0" textAlignment="CENTER" textFill="#0b3de4">
                                  <font>
-                                    <Font name="System Bold Italic" size="24.0" />
+                                    <Font name="System Bold Italic" size="14.0" />
                                  </font></Label>
-                              <Button id="b" fx:id="bTimerStop" layoutX="77.0" layoutY="5.0" mnemonicParsing="false" onAction="#timer" prefHeight="44.0" prefWidth="44.0" styleClass="button1" stylesheets="@../styles/day.css">
+                              <Button id="b" fx:id="bTimerStop" layoutX="59.0" layoutY="3.0" mnemonicParsing="false" onAction="#timer" prefHeight="30.0" prefWidth="30.0" styleClass="button1" stylesheets="@../styles/day.css">
                                  <graphic>
-                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/player/stop.png" />
                                        </image>
@@ -140,13 +164,13 @@
                                     <Tooltip text="Зупинити" />
                                  </tooltip>
                               </Button>
-                              <Label fx:id="reversTime" layoutX="272.0" layoutY="8.0" prefHeight="35.0" prefWidth="125.0" textFill="#0b3de4">
+                              <Label fx:id="reversTime" layoutX="223.0" layoutY="8.0" prefHeight="25.0" prefWidth="125.0" textFill="#0b3de4">
                                  <font>
-                                    <Font name="System Bold Italic" size="24.0" />
+                                    <Font name="System Bold Italic" size="14.0" />
                                  </font></Label>
                            </children>
                         </AnchorPane>
-                        <TableView fx:id="table" accessibleText="Відкрийте файл даних" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="table" accessibleText="Відкрийте файл даних" editable="true" prefHeight="519.0" prefWidth="423.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding></TableView>

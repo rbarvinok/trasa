@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static java.lang.Math.rint;
+import static ua.trasa.controller.ExposeController.expStage;
 import static ua.trasa.javaclass.servisClass.FileChooserRun.selectedOpenFile;
 
 @Slf4j
@@ -42,6 +43,7 @@ public class Controller implements Initializable {
     GetSettings getSettings = new GetSettings();
     ExposeController exposeController = new ExposeController();
 
+    public static Stage primaryStage;
     public static String localZone;
     public int colsInpDate = 0;
     public static String openFile = "";
@@ -69,7 +71,7 @@ public class Controller implements Initializable {
     @SneakyThrows
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //getSettings.getSettings();
+        getSettings.getSettings();
     }
 
     public void onClickOpenFile() {
@@ -81,7 +83,7 @@ public class Controller implements Initializable {
             openInputData();
         } else {
             inform.hd = "Файл уже відкритий";
-            inform.ct = " Повторне відкриття файлу призведе до втрати не збережених даних \n";
+            inform.ct = " Повторне відкриття файлу призведе до втрати незбережених даних \n";
             inform.inform();
         }
     }
@@ -199,6 +201,7 @@ public class Controller implements Initializable {
         outputTable.setItems(inputDatesList);
 
         tOpenFile.setDisable(true);
+        onClickMaster();
     }
 
     public void onClickMaster() {
@@ -239,9 +242,12 @@ public class Controller implements Initializable {
         tKML.setDisable(false);
         tChart.setDisable(false);
 
-        os.viewURL = "/view/exposeView.fxml";
         os.title = "Trasa  " + openFile;
+        os.viewURL = "/view/exposeView.fxml";
         os.openStage();
+
+        primaryStage = (Stage)  tMaster.getScene().getWindow();
+        primaryStage.hide();
     }
 
     public void inputDates(List source) {
@@ -376,17 +382,18 @@ public class Controller implements Initializable {
         inputDataMasters.clear();
         masters.clear();
         slaves.clear();
+        expStage.close();
     }
 
     public void onClickSetup() throws IOException {
         os.viewURL = "/view/settings.fxml";
-        os.title = "Налаштування   " + openFile;
+        os.title = "Налаштування";
         os.isModality = true;
         os.isResizable = false;
         os.openStage();
     }
 
     public void onClickCancelBtn(ActionEvent event) {
-        System.exit(0);
+        primaryStage.hide();
     }
 }

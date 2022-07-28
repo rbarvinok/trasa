@@ -1,0 +1,2 @@
+PlaceView=leftDown
+Opacity=100.0

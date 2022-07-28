@@ -1,52 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="263.0" prefWidth="385.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.SettingsController">
+<AnchorPane prefHeight="400.0" prefWidth="434.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.trasa.controller.SettingsController">
    <children>
-      <Label alignment="CENTER" layoutX="98.0" layoutY="24.0" prefHeight="22.0" prefWidth="196.0" text="Часовий пояс" AnchorPane.topAnchor="20.0">
+      <Pane layoutX="17.0" layoutY="64.0" prefHeight="222.0" prefWidth="401.0" style="-fx-border-color: black; -fx-background-color: gray;">
+         <children>
+            <Button fx:id="bLeftUp" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="64.0" prefWidth="52.0">
+               <opaqueInsets>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </opaqueInsets>
+            </Button>
+            <Button fx:id="bRightUp" layoutX="343.0" layoutY="5.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="64.0" prefWidth="52.0">
+               <opaqueInsets>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </opaqueInsets>
+            </Button>
+            <Button fx:id="bLeftDown" layoutX="5.0" layoutY="150.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="64.0" prefWidth="52.0">
+               <opaqueInsets>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </opaqueInsets>
+            </Button>
+            <Button fx:id="bRightDown" layoutX="343.0" layoutY="150.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="64.0" prefWidth="52.0">
+               <opaqueInsets>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </opaqueInsets>
+            </Button>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Pane>
+      <Button fx:id="okButton" layoutX="336.0" layoutY="354.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="82.0" text="OK" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="25.0" prefHeight="32.0" prefWidth="401.0" text="Розміщення екрану в режимі &quot;Вікно в вікні&quot;" textFill="#0a55eb" wrapText="true">
          <font>
-            <Font name="System Bold" size="15.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="GMTInput" disable="true" layoutX="22.0" layoutY="70.0" prefHeight="25.0" prefWidth="289.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="75.0" />
-      <Button fx:id="SaveNewGMT" defaultButton="true" layoutX="325.0" layoutY="134.0" mnemonicParsing="false" onAction="#onClickNewSettings" prefHeight="25.0" prefWidth="28.0" styleClass="button1" stylesheets="@../styles/day.css" AnchorPane.bottomAnchor="99.0" AnchorPane.rightAnchor="22.0">
-         <graphic>
-            <ImageView fitHeight="22.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/save.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <tooltip>
-            <Tooltip text="Зберегти" />
-         </tooltip>
-      </Button>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="186.0" prefHeight="56.0" prefWidth="361.0" textAlignment="CENTER" textFill="#e80303" underline="true" wrapText="true" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0">
-         <font>
-            <Font size="14.0" />
-         </font></Label>
-      <Button fx:id="editURL" defaultButton="true" layoutX="325.0" layoutY="68.0" mnemonicParsing="false" onAction="#onClickEditURL" prefHeight="25.0" prefWidth="28.0" styleClass="button1" stylesheets="@../styles/day.css" AnchorPane.rightAnchor="22.0">
-         <graphic>
-            <ImageView fitHeight="22.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/edit.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <tooltip>
-            <Tooltip text="Редагувати" />
-         </tooltip>
-      </Button>
-      <Separator layoutX="9.0" layoutY="162.0" prefHeight="17.0" prefWidth="375.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="1.0" />
-      <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="78.0" layoutY="46.0" prefHeight="17.0" prefWidth="231.0">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Label>
-      <Button fx:id="changeGMT" alignment="TOP_LEFT" layoutX="22.0" layoutY="106.0" mnemonicParsing="false" onAction="#onClickChangeGMT" prefHeight="25.0" prefWidth="289.0" styleClass="button1" stylesheets="@../styles/day.css" text="Встановити зимовий час" textFill="#0b3eb5" underline="true" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="75.0" />
-      <Button fx:id="utc" alignment="TOP_LEFT" layoutX="22.0" layoutY="136.0" mnemonicParsing="false" onAction="#onClickChangeUTC" prefHeight="25.0" prefWidth="289.0" styleClass="button1" stylesheets="@../styles/day.css" text="Встановити час UTC" textFill="#0b3eb5" underline="true" />
+      <TextField fx:id="tOpacity" layoutX="336.0" layoutY="301.0" prefHeight="25.0" prefWidth="82.0" />
+      <Label layoutX="17.0" layoutY="304.0" prefHeight="17.0" prefWidth="130.0" text="Прозорість  вікна, %" />
+      <Slider fx:id="slider" layoutX="155.0" layoutY="307.0" onDragDetected="#changeOpacity" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
    </children>
 </AnchorPane>
